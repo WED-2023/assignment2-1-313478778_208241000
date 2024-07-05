@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <NavBar/>
+    <!-- <div id="nav">
       <router-link :to="{ name: 'main' }">Vue Recipes</router-link>|
       <router-link :to="{ name: 'search' }">Search</router-link>|
       {{ !$root.store.username }}
@@ -12,13 +13,20 @@
       <span v-else>
         {{ $root.store.username }}: <button @click="Logout">Logout</button>|
       </span>
-    </div>
+    </div> -->
     <router-view />
   </div>
 </template>
 
+
+
+
 <script>
+import NavBar from "./components/NavBar";
 export default {
+  components:{
+    NavBar
+  },
   name: "App",
   methods: {
     Logout() {
