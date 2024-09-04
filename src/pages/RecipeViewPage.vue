@@ -1,127 +1,124 @@
 <template>
-  <div class="container">
-    <div v-if="recipe">
-      <div class="recipe-header mt-3 mb-4">
-        <h1>{{ recipe.title }}</h1>
-        <img :src="recipe.image" class="center" />
+  <div class="container my-5">
+    <div v-if="recipe" class="recipe-container">
+      <div class="recipe-header mb-4 text-center">
+        <h1 class="display-4 mb-3">{{ recipe.title }}</h1>
+        <img
+          :src="recipe.image"
+          class="img-fluid rounded shadow-sm"
+          alt="Recipe image"
+        />
       </div>
       <div class="recipe-body">
-        <div class="wrapper">
-          <div class="wrapped">
-            <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+        <div class="d-flex flex-wrap justify-content-between">
+          <div class="col-md-6 mb-4">
+            <div class="p-4 border rounded shadow-sm">
+              <h4>Details</h4>
+              <p>
+                <strong>Ready in:</strong> {{ recipe.readyInMinutes }} minutes
+              </p>
+              <p><strong>Likes:</strong> {{ recipe.aggregateLikes }} likes</p>
+              <h5 class="mt-3">Ingredients</h5>
+              <ul class="list-unstyled">
+                <li
+                  v-for="(ingredient, index) in recipe.extendedIngredients"
+                  :key="index"
+                  class="mb-2"
+                >
+                  <i class="fas fa-check-circle text-success"></i>
+                  {{ ingredient.original }}
+                </li>
+              </ul>
             </div>
-            Ingredients:
-            <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
-              </li>
-            </ul>
           </div>
-          <div class="wrapped">
-            Instructions:
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
-              </li>
-            </ol>
+          <div class="col-md-6 mb-4">
+            <div class="p-4 border rounded shadow-sm">
+              <h4>Instructions</h4>
+              <ol class="pl-3">
+                <li
+                  v-for="(step, index) in recipe._instructions"
+                  :key="index"
+                  class="mb-2"
+                >
+                  {{ step.step }}
+                </li>
+              </ol>
+            </div>
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
 
 <script>
-import { mockGetRecipeFullDetails } from "../services/recipes.js";
-export default {
-  data() {
-    return {
-      recipe: null
-    };
-  },
-  async created() {
-    try {
-      let response;
-      // response = this.$route.params.response;
-
-      try {
-        // response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/" + this.$route.params.recipeId,
-        //   {
-        //     withCredentials: true
-        //   }
-        // );
-
-        response = mockGetRecipeFullDetails(this.$route.params.recipeId);
-
-        // console.log("response.status", response.status);
-        if (response.status !== 200) this.$router.replace("/NotFound");
-      } catch (error) {
-        console.log("error.response.status", error.response.status);
-        this.$router.replace("/NotFound");
-        return;
-      }
-
-      let {
-        analyzedInstructions,
-        instructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title
-      } = response.data.recipe;
-
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
-
-      let _recipe = {
-        instructions,
-        _instructions,
-        analyzedInstructions,
-        extendedIngredients,
-        aggregateLikes,
-        readyInMinutes,
-        image,
-        title
+  import { mockGetRecipeFullDetails } from "../services/recipes.js";
+  export default {
+    data() {
+      return {
+        recipe: null,
       };
+    },
+    async created() {
+      try {
+        const response = await mockGetRecipeFullDetails(
+          this.$route.params.recipeId
+        );
 
-      this.recipe = _recipe;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-};
+        const {
+          analyzedInstructions,
+          instructions,
+          extendedIngredients,
+          aggregateLikes,
+          readyInMinutes,
+          servings,
+          image,
+          title,
+          id,
+        } = response.data.recipe;
+
+        const _instructions = analyzedInstructions
+          .map((fstep) => {
+            fstep.steps[0].step = fstep.name + fstep.steps[0].step;
+            return fstep.steps;
+          })
+          .reduce((a, b) => [...a, ...b], []);
+
+        const _recipe = {
+          instructions,
+          _instructions,
+          analyzedInstructions,
+          extendedIngredients,
+          aggregateLikes,
+          readyInMinutes,
+          servings,
+          image,
+          title,
+          id,
+        };
+
+        this.recipe = _recipe;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  };
 </script>
 
 <style scoped>
-.wrapper {
-  display: flex;
-}
-.wrapped {
-  width: 50%;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
-/* .recipe-header{
+  .wrapper {
+    display: flex;
+  }
+  .wrapped {
+    width: 50%;
+  }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }
+  /* .recipe-header{
 
 } */
 </style>

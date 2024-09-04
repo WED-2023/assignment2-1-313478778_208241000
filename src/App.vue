@@ -23,16 +23,16 @@
 
 <script>
 import NavBar from "./components/NavBar";
+
 export default {
+  name: "App",
   components:{
     NavBar
   },
-  name: "App",
   methods: {
     Logout() {
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
-
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });
@@ -52,16 +52,16 @@ export default {
   min-height: 100vh;
 }
 
-#nav {
-  padding: 30px;
-}
+// #nav {
+//   padding: 30px;
+// }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+// #nav a {
+//   font-weight: bold;
+//   color: #2c3e50;
+// }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+// #nav a.router-link-exact-active {
+//   color: #42b983
+// }
 </style>

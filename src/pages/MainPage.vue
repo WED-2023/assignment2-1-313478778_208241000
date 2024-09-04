@@ -1,45 +1,49 @@
 <template>
-  <div class="container">
-    <h1 class="title">Main Page</h1>
-    <RecipePreviewList title="Randome Recipes" class="RandomRecipes center" />
-    <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    
-    {{ !$root.store.username }}
-    <RecipePreviewList
-      title="Last Viewed Recipes"
-      :class="{
-        RandomRecipes: true,
-        blur: !$root.store.username,
-        center: true
-      }"
-      disabled
-    ></RecipePreviewList>
-    <!-- <div
-      style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
-    >
-      Centeredasdasdad
-    </div>-->
-  </div>
+  <b-container class="bv-example-row">
+    <b-col class="my-4">
+      <h1 class="text-center">Site Title</h1>
+    </b-col>
+
+    <b-container class="bv-example-row">
+      <b-row class="text-center">
+        <b-col>
+          <RecipePreviewList title="Title"></RecipePreviewList>
+        </b-col>
+        <b-col class="d-flex justify-content-center align-items-center">
+          <b-card style="border-radius: 32px;">
+            <LoginForm v-if="showLoginForm" :toggle-form="toggleForm" />
+            <RegisterForm v-else :toggle-form="toggleForm" />
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
+  </b-container>
 </template>
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
-export default {
-  components: {
-    RecipePreviewList
-  }
-};
+  import LoginForm from "../components/LoginForm.vue"; // Adjust the path if necessary
+  import RecipePreviewList from "../components/RecipePreviewList.vue";
+  import RegisterForm from "../components/RegisterForm.vue";
+
+  export default {
+    components: {
+      LoginForm,
+      RegisterForm,
+      RecipePreviewList,
+    },
+    data() {
+      return {
+        showLoginForm: true, // Boolean state to toggle between forms
+      };
+    },
+    methods: {
+      toggleForm() {
+        this.showLoginForm = !this.showLoginForm;
+      },
+    },
+  };
 </script>
+
 <style lang="scss" scoped>
-.RandomRecipes {
-  margin: 10px 0 10px;
-}
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
+  /* Add your custom styles here if necessary */
 </style>

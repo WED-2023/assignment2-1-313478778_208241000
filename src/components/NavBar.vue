@@ -1,15 +1,21 @@
 <template>
-  <!-- <b-navbar type="dark" variant="info" class="nav-bar"> -->
-  <b-navbar  type="light" variant="primary" class="nav-bar">    
-    <router-link tag="b-navbar-brand" style="color:#FAEBD7" :to="{ name: 'main' }"
-     
-      >    <img src="https://logowik.com/content/uploads/images/chef-restaurant5078.logowik.com.webp" style="max-width: 100px; height: 50px;">
-      <!-- <b>Vue Recipes</b> -->
-</router-link
+  <b-navbar type="light" variant="primary" class="nav-bar">
+    <router-link
+      tag="b-navbar-brand"
+      style="color:#FAEBD7"
+      :to="{ name: 'main' }"
     >
+      <img
+        src="https://logowik.com/content/uploads/images/chef-restaurant5078.logowik.com.webp"
+        style="max-width: 100px; height: 50px;"
+      />
+    </router-link>
+
     <!-- Home -->
     <b-navbar-nav>
-      <router-link tag="b-nav-item" :to="{ name: 'main' }"><b>Home</b></router-link>
+      <router-link tag="b-nav-item" :to="{ name: 'main' }"
+        ><b>Home</b></router-link
+      >
     </b-navbar-nav>
 
     <!-- Search -->
@@ -21,19 +27,17 @@
 
     <!-- About -->
     <b-navbar-nav>
-      <router-link tag="b-nav-item" to="/About"
-        ><b>About</b></router-link
-      >
+      <router-link tag="b-nav-item" to="/About"><b>About</b></router-link>
     </b-navbar-nav>
 
-    <!-- Registred user  -->
-    <b-navbar-nav v-if="$root.store.username">  
-      <!-- dropdown Personal : Favorites,Private,Family -->
+    <!-- Registered User -->
+    <b-navbar-nav v-if="$root.store.username">
+      <!-- Personal Dropdown: Favorites, Private, Family -->
       <b-nav-item-dropdown text="Personal" class="bold-option">
         <!-- <div v-if="this.$root.store.username"> -->
         <router-link tag="b-dropdown-item" to="/user/getFavorites"
           ><b>Favorites</b></router-link
-        >     
+        >
         <router-link tag="b-dropdown-item" to="/user/personalRecipes"
           ><b>Private</b></router-link
         >
@@ -43,11 +47,13 @@
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
-    <!-- dropdown Hello guest: Login & Register -->
+    <!-- Guest Dropdown: Login & Register -->
     <b-navbar-nav class="ml-auto">
-      <b-nav-item-dropdown class="bold-option" 
+      <b-nav-item-dropdown
+        class="bold-option"
         v-if="!$root.store.username"
-        right text="Hello guest" 
+        right
+        text="Hello guest"
       >
         <router-link tag="b-dropdown-item" :to="{ name: 'register' }"
           ><b>Register</b></router-link
@@ -59,42 +65,40 @@
 
       <!-- Logout -->
       <span v-else>
-         <b-nav-item>
-        {{ $root.store.username }}: <button @click="Logout" class="button"><b>Logout</b></button>
-         </b-nav-item>
+        <b-nav-item>
+          {{ $root.store.username }}:
+          <button @click="Logout" class="button"><b>Logout</b></button>
+        </b-nav-item>
       </span>
     </b-navbar-nav>
   </b-navbar>
 </template>
 
 <script>
-export default {
-  methods: {
-    Logout() {
-      this.$root.store.logout();
-      this.$root.toast("Logout", "User logged out successfully", "success");
-      this.$router.push("/").catch(() => {
-        this.$forceUpdate();
-      });
+  export default {
+    methods: {
+      Logout() {
+        this.$root.store.logout();
+        this.$root.toast("Logout", "User logged out successfully", "success");
+        this.$router.push("/").catch(() => {
+          this.$forceUpdate();
+        });
+      },
     },
-  },
-};
+  };
 </script>
 
 <style>
-.nav-bar{
-font-family: "Lucida Console", Monaco, monospace;
-}
-.bold-option{
-  font-weight: bolder;
-}
-.button{
-  color:#5a575a;
-}
-.button:hover{
-  color:#9aaeb6;
-}
+  .nav-bar {
+    font-family: "Lucida Console", Monaco, monospace;
+  }
+  .bold-option {
+    font-weight: bolder;
+  }
+  .button {
+    color: #5a575a;
+  }
+  .button:hover {
+    color: #9aaeb6;
+  }
 </style>
-
-
-

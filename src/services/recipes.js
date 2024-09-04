@@ -19,7 +19,9 @@ export function mockGetRecipesPreview(amount = 6) {
 }
 
 export function mockGetRecipeFullDetails(recipeId) {
+  console.log("cccccccccccccc",recipeId)
   // Find the full details based on recipeId from the full view JSON
   const recipe = recipeFullView.find((r) => r.id === recipeId);
+  console.log("cc8888888888888888888888888",recipe)
   return { data: { recipe: recipe || recipeFullView[0] } }; // Fallback to the first recipe if not found
 }
