@@ -7,13 +7,21 @@
     <b-container class="bv-example-row">
       <b-row class="text-center">
         <b-col>
-          <RecipePreviewList title="Title"></RecipePreviewList>
+          <RecipePreviewList title="Title2"></RecipePreviewList>
         </b-col>
         <b-col class="d-flex justify-content-center align-items-center">
-          <b-card style="border-radius: 32px;">
-            <LoginForm v-if="showLoginForm" :toggle-form="toggleForm" />
-            <RegisterForm v-else :toggle-form="toggleForm" />
-          </b-card>
+          <b-col v-if="this.$root.store.username">
+            <RecipePreviewList title="Title1"></RecipePreviewList>
+          </b-col>
+          <b-col
+            v-else
+            class="d-flex justify-content-center align-items-center"
+          >
+            <b-card style="border-radius: 32px;">
+              <LoginForm v-if="showLoginForm" :toggle-form="handleToggleForm" />
+              <RegisterForm v-else :toggle-form="handleToggleForm" />
+            </b-card>
+          </b-col>
         </b-col>
       </b-row>
     </b-container>
