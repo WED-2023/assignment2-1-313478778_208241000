@@ -15,14 +15,15 @@
           ></b-card-img>
         </b-col>
         <b-col md="6">
-          <b-card-body
-            class="recipe-body"
-            :title="recipe.title"
-            style="min-height: 100%;"
-          >
+          <b-card-body>
+            <b-card-title
+              class="recipe-body font-weight-bold"
+              :title="recipe.title"
+              style="font-size: 1.1rem; padding-bottom: 18px;"
+              />
             <b-card-text
               class="d-flex justify-content-center"
-              style="column-gap: 10px;"
+              style="column-gap: 10px; font-size: 1rem"
             >
               <img
                 src="../assets//myLogo.png"
@@ -43,8 +44,8 @@
                 alt="Responsive image"
               />
             </b-card-text>
-            <b-card-text class="d-flex justify-content-between">
-              <span>{{ recipe.readyInMinutes }} minutes&nbsp;&nbsp;</span>
+            <b-card-text class="d-flex align-items-center justify-content-around">
+              <span>{{ recipe.readyInMinutes }} minutes </span>
               <span>{{ recipe.aggregateLikes }} likes </span>
             </b-card-text>
           </b-card-body>
@@ -96,6 +97,7 @@
           return undefined;
         },
       },
+      
     },
   };
 </script>
@@ -108,7 +110,8 @@
     border-radius: 32px;
     border: none;
     transition: transform 0.2s;
-    max-height: 90%;
+    max-height: 170px;
+
   }
 
   .recipe-preview:hover {
