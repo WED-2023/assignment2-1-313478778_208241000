@@ -48,8 +48,8 @@
         <span
           style="cursor: pointer; text-decoration: underline; color: #0000EE"
           @click="handleToggleForm"
-          >Register here</span
-        >
+          >Register here
+        </span>
       </div>
     </b-form>
     <b-alert

@@ -3,12 +3,11 @@
   <b-container>
     <!-- Title section with slot for additional content -->
     <h3>
-      {{ title }}:
-      <slot></slot>
+      {{ title }}
     </h3>
     <!-- Recipe previews displayed in a row -->
       <b-row class="mt-4" v-for="r in recipes" :key="r.id">
-        <RecipePreview :recipe="r" />
+        <RecipePreview :recipe="r"/>
       </b-row>
    
   </b-container>
@@ -62,7 +61,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  min-height: 400px; // Minimum height for the container
-}
+
 </style>

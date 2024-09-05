@@ -44,13 +44,14 @@
               />
             </b-card-text>
             <b-card-text class="d-flex justify-content-between">
-              <span>{{ recipe.readyInMinutes }} minutes</span>
-              <span>{{ recipe.aggregateLikes }} likes</span>
+              <span>{{ recipe.readyInMinutes }} minutes&nbsp;&nbsp;</span>
+              <span>{{ recipe.aggregateLikes }} likes </span>
             </b-card-text>
           </b-card-body>
         </b-col>
       </b-row>
-    </b-card></router-link
+    </b-card>
+  </router-link
   >
 </template>
 
@@ -103,10 +104,11 @@
   .recipe-preview {
     cursor: pointer;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    min-width: 100%;
+    min-width: 90%;
     border-radius: 32px;
     border: none;
     transition: transform 0.2s;
+    max-height: 90%;
   }
 
   .recipe-preview:hover {
