@@ -62,9 +62,9 @@ export default {
       try {
         await this.$root.store.logout();
         this.$root.toast("Logout", "User logged out successfully", "success");
-        const currentPath = this.$router.currentRoute.value.path;
-        await this.$router.push("/");
-        if (currentPath !== '/'){
+        
+        // Navigate to home route if not already there
+        if (this.$route.path !== '/') {
           await this.$router.push('/');
         }
       } catch (error) {

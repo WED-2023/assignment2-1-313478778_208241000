@@ -30,32 +30,35 @@
             >
               <b-img
                 :src="require('@/assets/vegetarian_logo.png')"
-                alt="Responsive image"
+                alt="Vegetarian"
                 width="60"
-                height=auto
               />
               <b-img
                 :src="require('@/assets/vegan_logo.png')"
-                alt="Responsive image"
+                alt="Vegan"
                 width="60"
-                height=auto
               />
               <b-img
                 :src="require('@/assets//gluten_free_logo.png')"
-                alt="Responsive image"
+                alt="Gluten Free"
                 width="60"
-                height=auto
               />
             </b-card-text>
             <b-card-text class="d-flex align-items-center justify-content-around">
               <!-- <span>{{ recipe.readyInMinutes }} min. <b-icon-stopwatch font-scale="1.36"/> </span> -->
               <!-- <span>{{ recipe.readyInMinutes }} min. <hover-icon iconName="stopwatch"/> </span> -->
-              <span><h5><b-badge disabled variant="light">{{ recipe.readyInMinutes }} min. <b-icon-stopwatch font-scale="1.36"/></b-badge></h5></span>
+              <span>
+                <h5><b-badge disabled variant="light">
+                  {{ recipe.readyInMinutes }} min.
+                  <b-icon-stopwatch font-scale="1.36"/>
+                </b-badge></h5>
+              </span>
               <!-- <span><b-badge disabled variant="primary" > {{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="white" font-scale="1.36"/></b-badge></span> -->
-              <span><h5><b-badge disabled variant="primary" > {{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="white" font-scale="1.36"/></b-badge></h5></span>
+              <span><h5><b-badge disabled variant="primary">
+                 {{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="white" font-scale="1.36"/>
+                </b-badge></h5>
+              </span>
               <!-- <span> <h5>{{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="primary" font-scale="1.36"/></h5> </span> -->
-
-
             </b-card-text>
           </b-card-body>
         </b-col>
@@ -67,51 +70,30 @@
 
 <script>
 import HoverIcon from './HoverIcon.vue';
-  export default {
-    components:{
+import axios from 'axios'
+  export default
+   {
+    components:
+    {
     HoverIcon
-  },
-    mounted() {
-      this.
-        HoverIconaxios.get(this.recipe.image).then((i) => {
-        this.image_load = true;
-      });
+    },
+    props:
+     {
+      recipe: {
+        type: Object,
+        required: true,
+      },      
     },
     data() {
       return {
         image_load: true,
       };
     },
-    props: {
-      recipe: {
-        type: Object,
-        required: true,
-      },
-
-      id: {
-        type: Number,
-        required: true,
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      readyInMinutes: {
-        type: Number,
-        required: true,
-      },
-      image: {
-        type: String,
-        required: true,
-      },
-      aggregateLikes: {
-        type: Number,
-        required: false,
-        default() {
-          return undefined;
-        },
-      },
-      
+    mounted() {
+      this.
+        axios.get(this.recipe.image).then((i) => {
+        this.image_load = true;
+      });
     },
   };
 </script>

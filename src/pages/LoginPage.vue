@@ -1,6 +1,7 @@
 <template>
   <div>
-    <login-form />
+    <!-- <login-form /> -->
+    <LoginForm :toggleForm="toggleForm"/>
   </div>
 </template>
 
@@ -9,8 +10,13 @@
 
   export default {
     components: {
-      "login-form": LoginForm,
+      LoginForm
     },
+    methods: {
+      toggleForm(){
+        console.log("Toggle form called")
+      }
+    }
   };
 </script>
 
