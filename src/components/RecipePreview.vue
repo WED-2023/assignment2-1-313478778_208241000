@@ -45,8 +45,14 @@
               />
             </b-card-text>
             <b-card-text class="d-flex align-items-center justify-content-around">
-              <span>{{ recipe.readyInMinutes }} minutes </span>
-              <span>{{ recipe.aggregateLikes }} likes </span>
+              <!-- <span>{{ recipe.readyInMinutes }} min. <b-icon-stopwatch font-scale="1.36"/> </span> -->
+              <!-- <span>{{ recipe.readyInMinutes }} min. <hover-icon iconName="stopwatch"/> </span> -->
+              <span><h5><b-badge disabled variant="light">{{ recipe.readyInMinutes }} min. <b-icon-stopwatch font-scale="1.36"/></b-badge></h5></span>
+              <!-- <span><b-badge disabled variant="primary" > {{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="white" font-scale="1.36"/></b-badge></span> -->
+              <span><h5><b-badge disabled variant="primary" > {{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="white" font-scale="1.36"/></b-badge></h5></span>
+              <!-- <span> <h5>{{ recipe.aggregateLikes }} likes <b-icon-hand-thumbs-up variant="primary" font-scale="1.36"/></h5> </span> -->
+
+
             </b-card-text>
           </b-card-body>
         </b-col>
@@ -57,9 +63,14 @@
 </template>
 
 <script>
+import HoverIcon from './HoverIcon.vue';
   export default {
+    components:{
+    HoverIcon
+  },
     mounted() {
-      this.axios.get(this.recipe.image).then((i) => {
+      this.
+        HoverIconaxios.get(this.recipe.image).then((i) => {
         this.image_load = true;
       });
     },
@@ -124,4 +135,12 @@
     align-items: center;
     flex-direction: column;
   }
+
+  /* .icons{
+    transition: transform 0.3s ease, fill 0.3 ease;
+  }
+
+  .icons:hover{
+    transform: scale(1.5);
+  } */
 </style>

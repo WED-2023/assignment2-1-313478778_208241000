@@ -62,7 +62,11 @@ export default {
       try {
         await this.$root.store.logout();
         this.$root.toast("Logout", "User logged out successfully", "success");
+        const currentPath = this.$router.currentRoute.value.path;
         await this.$router.push("/");
+        if (currentPath !== '/'){
+          await this.$router.push('/');
+        }
       } catch (error) {
         console.error("Error during logout:", error);
         this.$root.toast("Logout Error", "There was an issue logging out", "error");

@@ -3,7 +3,7 @@
     <b-row class="text-center">
       <b-col class="d-flex justify-content-center align-items-center">
         <b-col v-if="this.$root.store.username">
-          <RecipePreviewList title="Title1"></RecipePreviewList>
+          <WelcomUser/>
         </b-col>
         <b-col v-else class="d-flex justify-content-center align-items-center">
           <b-card style="border-radius: 32px;">
@@ -23,12 +23,14 @@
   import LoginForm from "../components/LoginForm.vue"; // Adjust the path if necessary
   import RecipePreviewList from "../components/RecipePreviewList.vue";
   import RegisterForm from "../components/RegisterForm.vue";
+import WelcomUser from "../components/WelcomUser.vue";
 
   export default {
     components: {
       LoginForm,
       RegisterForm,
       RecipePreviewList,
+      WelcomUser,
     },
     data() {
       return {
