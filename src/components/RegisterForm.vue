@@ -96,12 +96,12 @@
       </b-form-group>
 
       <!-- Buttons -->
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-button type="reset" variant="danger" style="width: 80px;">Reset</b-button>
       <b-button
         type="submit"
         variant="primary"
-        style="width:250px;"
-        class="ml-5 w-75"
+        style="width:370px;"
+        class="ml-3 w-70"
       >
         Register
       </b-button>

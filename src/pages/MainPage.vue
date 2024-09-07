@@ -1,27 +1,21 @@
 <template>
   <b-container class="bv-example-row">
-    <!-- <b-col class="my-4">
-      <h1 class="text-center">Site Title</h1>
-    </b-col> -->
-
-    <b-container class="bv-example-row">
-      <b-row class="text-center">
-        <b-col>
-          <RecipePreviewList title="Explore"></RecipePreviewList>
+    <b-row class="text-center">
+      <b-col class="d-flex justify-content-center align-items-center">
+        <b-col v-if="this.$root.store.username">
+          <RecipePreviewList title="Title1"></RecipePreviewList>
         </b-col>
-        <b-col class="d-flex justify-content-center align-items-center">
-          <b-col v-if="this.$root.store.username">
-            <RecipePreviewList title="Title1"></RecipePreviewList>
-          </b-col>
-          <b-col v-else class="d-flex justify-content-center align-items-center">
-            <b-card style="border-radius: 32px;">
-              <LoginForm v-if="showLoginForm" :toggle-form="toggleForm" />
-              <RegisterForm v-else :toggle-form="toggleForm" />
-            </b-card>
-          </b-col>
+        <b-col v-else class="d-flex justify-content-center align-items-center">
+          <b-card style="border-radius: 32px;">
+            <LoginForm v-if="showLoginForm" :toggle-form="toggleForm" />
+            <RegisterForm v-else :toggle-form="toggleForm" />
+          </b-card>
         </b-col>
-      </b-row>
-    </b-container>
+      </b-col>
+      <b-col>
+        <RecipePreviewList title="Explore"></RecipePreviewList>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
