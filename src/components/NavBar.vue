@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top" small>
+    <b-navbar toggleable="lg" type="dark" variant="primary" fixed="top" small class="custom-navbar">
       <!-- Navbar Brand with Logo -->
       <router-link tag="b-navbar-brand" :to="{ name: 'main' }">
         <b-img
@@ -23,14 +23,15 @@
 
           <!-- About Link -->
           <router-link tag="b-nav-item" :to="{ name: 'about' }" class="nav-link"><b>About</b></router-link>
+
         </b-navbar-nav>
 
         <!-- User Dropdown -->
         <b-navbar-nav v-if="$root.store.username">
           <b-nav-item-dropdown text="Personal" right class="bold-option">
             <router-link tag="b-dropdown-item" :to="{ name: 'favorites' }" class="nav-link"><b>Favorites</b></router-link>
-            <router-link tag="b-dropdown-item" :to="{ name: 'personalRecipes' }" class="nav-link"><b>Private</b></router-link>
-            <router-link tag="b-dropdown-item" :to="{ name: 'familyRecipes' }" class="nav-link"><b>Family</b></router-link>
+            <router-link tag="b-dropdown-item" :to="{ name: 'private' }" class="nav-link"><b>Private</b></router-link>
+            <router-link tag="b-dropdown-item" :to="{ name: 'family' }" class="nav-link"><b>Family</b></router-link>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
@@ -59,20 +60,28 @@
 export default {
   methods: {
     async Logout() {
-      try {
-        await this.$root.store.logout();
-        this.$root.toast("Logout", "User logged out successfully", "success");
-        await this.$router.push("/");
-      } catch (error) {
-        console.error("Error during logout:", error);
-        this.$root.toast("Logout Error", "There was an issue logging out", "error");
-      }
+    try {
+      await this.$root.store.logout();
+      this.$root.toast("Logout", "User logged out successfully", "success");
+      await this.$router.push("/").catch((err) => {
+        if (err.name !== 'NavigationDuplicated') {
+          throw err;
+        }
+      });
+    } catch (error) {
+      console.error("Error during logout:", error);
+      this.$root.toast("Logout Error", "There was an issue logging out", "error");
+    }
     },
   },
 };
 </script>
 
 <style scoped>
+.custom-navbar {
+  background-color: rgba(71, 93, 32, 0.95) !important; 
+  border-bottom: 2px solid rgba(75, 93, 44, 0.9); /* Optional: Add a slightly darker border with the same transparency */
+}
 .bold-option {
   font-weight: bold;
 }
