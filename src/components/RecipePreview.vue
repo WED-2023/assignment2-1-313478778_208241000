@@ -6,42 +6,45 @@
     <b-card no-body class="recipe-preview overflow-hidden">
       <b-row no-gutters>
         <b-col md="6">
-          <b-card-img
+          <div class="image-container position-relative">
+            <b-card-img
             v-if="image_load"
             :src="recipe.image"
             alt="Image"
             class="rounded-0"
             style="height:100%"
-          ></b-card-img>
+          ></b-card-img> 
+          <hover-Icon class="icon-overlay" iconName="star"></hover-icon>
+          </div>
         </b-col>
         <b-col md="6">
           <b-card-body>
             <b-card-title
               class="recipe-body font-weight-bold"
               :title="recipe.title"
-              style="font-size: 1.1rem; padding-bottom: 18px;"
+              style="font-size: 1.1rem; padding-bottom: 16px; margin-bottom: 0px;"
               />
             <b-card-text
               class="d-flex justify-content-center"
               style="column-gap: 10px; font-size: 1rem"
             >
-              <img
-                src="../assets//myLogo.png"
-                width="40"
-                height="40"
+              <b-img
+                :src="require('@/assets/vegetarian_logo.png')"
                 alt="Responsive image"
+                width="60"
+                height=auto
               />
-              <img
-                src="../assets//myLogo.png"
-                width="40"
-                height="40"
+              <b-img
+                :src="require('@/assets/vegan_logo.png')"
                 alt="Responsive image"
+                width="60"
+                height=auto
               />
-              <img
-                src="../assets//myLogo.png"
-                width="40"
-                height="40"
+              <b-img
+                :src="require('@/assets//gluten_free_logo.png')"
                 alt="Responsive image"
+                width="60"
+                height=auto
               />
             </b-card-text>
             <b-card-text class="d-flex align-items-center justify-content-around">
@@ -134,6 +137,18 @@ import HoverIcon from './HoverIcon.vue';
     display: flex;
     align-items: center;
     flex-direction: column;
+  }
+
+  .image-container {
+  position: relative;
+  height: 100%;
+  }
+
+.icon-overlay {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  left: 10px; /* Adjust as needed */
+  color: gold; /* Or any color you want */
   }
 
   /* .icons{
