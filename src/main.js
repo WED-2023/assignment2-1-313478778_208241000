@@ -26,6 +26,9 @@ import {
   LayoutPlugin,
   LinkPlugin,
   ImagePlugin,
+  IconsPlugin,
+  BadgePlugin,
+  JumbotronPlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -40,6 +43,10 @@ import {
   LayoutPlugin,
   LinkPlugin,
   ImagePlugin,
+  IconsPlugin,
+  BadgePlugin,
+  JumbotronPlugin,
+
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 

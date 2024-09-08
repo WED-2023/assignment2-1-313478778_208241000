@@ -60,18 +60,18 @@
 export default {
   methods: {
     async Logout() {
-    try {
-      await this.$root.store.logout();
-      this.$root.toast("Logout", "User logged out successfully", "success");
-      await this.$router.push("/").catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
-          throw err;
+      try {
+        await this.$root.store.logout();
+        this.$root.toast("Logout", "User logged out successfully", "success");
+        
+        // Navigate to home route if not already there
+        if (this.$route.path !== '/') {
+          await this.$router.push('/');
         }
-      });
-    } catch (error) {
-      console.error("Error during logout:", error);
-      this.$root.toast("Logout Error", "There was an issue logging out", "error");
-    }
+      } catch (error) {
+        console.error("Error during logout:", error);
+        this.$root.toast("Logout Error", "There was an issue logging out", "error");
+      }
     },
   },
 };
