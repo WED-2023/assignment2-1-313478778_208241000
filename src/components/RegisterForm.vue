@@ -96,7 +96,7 @@
       </b-form-group>
 
       <!-- Buttons -->
-      <b-button type="reset" variant="danger" style="width: 80px;">Reset</b-button>
+      <b-button type="reset" variant="secondary" style="width: 80px;">Reset</b-button>
       <b-button
         type="submit"
         variant="primary"
@@ -110,7 +110,7 @@
       <div class="mt-3">
         You have an account already?
         <span
-          style="cursor: pointer; text-decoration: underline; color: #0000EE"
+          class="login-prompt"
           @click="handleToggleForm"
           >Login here</span
         >
@@ -207,14 +207,46 @@
 </script>
 
 <style scoped>
-  .form-group {
-    margin-bottom: 1rem;
-  }
   .title {
     text-align: center;
     margin-bottom: 1rem;
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    font-size: 2.5rem;
+    color: #1e3a8a; /* Apply your blue color */
   }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    color: #1e3a8a; /* Apply your blue color */
+  }
+
+  .form-control {
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    color: #1e3a8a; /* Apply your blue color */
+  }
+
+  .b-form-invalid-feedback {
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    color: #e74c3c; /* Keep feedback in a distinct color, typically red for errors */
+  }
+
+  .login-prompt {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #1e3a8a; /* Apply your blue color */
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+  }
+
   .mt-3 {
     margin-top: 1rem;
+  }
+
+  .b-button {
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    font-weight: 600; /* Semi-bold for buttons */
   }
 </style>

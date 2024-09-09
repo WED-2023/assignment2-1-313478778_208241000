@@ -1,15 +1,9 @@
 <template>
-  <!-- Main container for the component -->
-  <b-container>
-    <!-- Title section with slot for additional content -->
-    <h3>
-      {{ title }}
-    </h3>
-    <!-- Recipe previews displayed in a row -->
-      <b-row class="mt-4" v-for="r in recipes" :key="r.id">
-        <RecipePreview :recipe="r"/>
-      </b-row>
-   
+  <b-container class="recipe-preview-container">
+    <h3>{{ title }}</h3>
+    <b-row class="mt-4" v-for="recipe in recipes" :key="recipe.id">
+      <RecipePreview :recipe="recipe" />
+    </b-row>
   </b-container>
 </template>
 
@@ -60,7 +54,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.recipe-preview-container {
+  background-color: rgba(248, 245, 237, 0.90); /* Matches the jumbotron color */
+  padding: 34px; /* Adds padding similar to jumbotron */
+  border-radius: 20px; /* Optional: rounds the corners for a softer look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  margin-top: 20px; /* Space above the container */
+}
 </style>
 

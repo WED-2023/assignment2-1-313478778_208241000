@@ -6,7 +6,7 @@
           <WelcomUser/>
         </b-col>
         <b-col v-else class="d-flex justify-content-center align-items-center">
-          <b-card style="border-radius: 32px;">
+          <b-card class="custom-card" style="border-radius: 32px;">
             <LoginForm v-if="showLoginForm" :toggle-form="toggleForm" />
             <RegisterForm v-else :toggle-form="toggleForm" />
           </b-card>
@@ -46,5 +46,10 @@ import WelcomUser from "../components/WelcomUser.vue";
 </script>
 
 <style lang="scss" scoped>
-  /* Add your custom styles here if necessary */
+  .custom-card {
+  background-color: rgba(248, 245, 237, 0.90) !important; /* Cream color similar to your navbar */
+  border: none; /* Optional: remove the border if not needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add subtle shadow for depth */
+  color: #1e3a8a; /* Optional: text color */
+}
 </style>

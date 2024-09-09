@@ -139,4 +139,20 @@
   .container {
     max-width: 400px;
   }
+  .form-group label {
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    color: #1e3a8a; /* Apply your blue color */
+  }
+
+  .form-control {
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    color: #1e3a8a; /* Apply your blue color */
+  }
+  .title {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
+    font-size: 2.5rem;
+    color: #1e3a8a; /* Apply your blue color */
+  }
 </style>

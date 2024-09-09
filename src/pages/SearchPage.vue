@@ -4,14 +4,14 @@
 
     <!-- Small Buttons Above Search Input -->
     <div class="mt-3">
-      <h6 class="mb-2 font-weight-bold">Amount of results</h6>
+      <h6 class="mb-2 font-weight-bold result-header">Amount of results</h6>
       <b-button-group>
         <b-button
           v-for="result in results"
           :key="result"
-          :variant="result === selectedResult ? 'primary' : 'outline-primary'"
+          :variant="result === selectedResult ? 'custom-active' : 'outline-custom'"
           @click="selectResult(result)"
-          class="btn-lg"
+          class="btn-lg result-button"
         >
           {{ result }}
         </b-button>
@@ -22,7 +22,7 @@
     <div class="d-flex justify-content-between align-items-center mt-3">
       <b-form-input v-model="text" placeholder="Look for a recipe..." class="w-75 taller-input mr-2"></b-form-input>
       <div>
-        <b-button variant="success" class="btn-lg">Search</b-button> <!-- Larger button -->
+        <b-button class="btn-lg search-button">Search</b-button> <!-- Larger button -->
         <b-button variant="secondary" class="ml-2 btn-lg" @click="resetSearch">Reset</b-button> <!-- Smaller button -->
       </div>
     </div>
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Selected Value Display -->
-    <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+    <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
   </div>
 </template>
 
@@ -120,7 +120,56 @@ export default {
 }
 
 .title {
+  font-size: 3rem;
+  font-family: 'Assistant', sans-serif;
+  color: #1e3a8a;
   margin-bottom: 20px;
+}
+
+.result-header {
+  font-family: 'Assistant', sans-serif;
+  color: #1e3a8a;
+  font-weight: 600; /* Semibold */
+}
+
+.result-button {
+  font-family: 'Assistant', sans-serif !important; /* Apply custom font */
+  font-weight: 600; /* Semi-bold */
+  color: #1e3a8a !important; /* Match button text color */
+  border-color: #1e3a8a !important; /* Match border color */
+  background-color: transparent !important; /* Ensure no background fill */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* Active state class from the HTML: Ensuring it matches the hover state */
+.btn-custom-active {
+  background-color: #1e3a8a !important; /* Same as hover effect */
+  color: rgba(248, 245, 237, 0.90) !important; /* Light text color */
+  border-color: #1e3a8a !important; /* Consistent border color */
+}
+
+.result-button:hover,
+.btn-custom-active {
+  background-color: #1e3a8a !important; /* Hover and active effect */
+  color: rgba(248, 245, 237, 0.90) !important; /* Consistent text color */
+}
+.search-button {
+  background-color: #1e3a8a !important; /* Blue color for button */
+  color: rgba(248, 245, 237, 0.90) !important; /* Light text color */
+  border-color: #1e3a8a !important; /* Blue border */
+  font-family: 'Assistant', sans-serif !important; /* Apply the same font */
+  font-weight: 600; /* Make text semi-bold */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.search-button:hover {
+  background-color: #0c4a6e !important; /* Slightly darker blue on hover */
+  color: rgba(248, 245, 237, 0.90) !important; /* Keep text color light */
+}
+.outline-custom {
+  border-color: #1e3a8a !important; /* Outline button border color */
+  color: #1e3a8a !important; /* Outline button text color */
+  font-family: 'Assistant', sans-serif !important; /* Consistent font */
 }
 
 .mb-2 {
