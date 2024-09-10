@@ -1,12 +1,12 @@
 <template>
   <!-- Main container for the component -->
   <b-container class="recipe-preview-container">
-    <h3>{{ title }}</h3>
+    <!-- <h3>{{ title }}</h3> -->
     <!-- Flex container for title and icon -->
     <b-row class="d-flex align-items-center justify-content-between">
       <b-col>
         <!-- Title section -->
-        <h3>{{ title }}</h3>
+        <h3 >{{ title }}</h3>
       </b-col>
       <b-col class="text-right">
         <!-- Hover and click icon aligned to the right -->
@@ -96,5 +96,7 @@ export default {
   border-radius: 20px; /* Optional: rounds the corners for a softer look */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
   margin-top: 20px; /* Space above the container */
+  // font-family: 'Assistant', sans-serif; -> to do - add font to title
+  // color: #1e3a8a;
 }
 </style>
