@@ -3,10 +3,11 @@
     <div v-if="recipe" class="recipe-container">
       <div class="recipe-header mb-4 text-center">
         <h1 class="display-4 mb-3">{{ recipe.title }}</h1>
-        <img
+        <b-img
           :src="recipe.image"
-          class="img-fluid rounded shadow-sm"
+          class="img-fluid shadow-sm rounded-lg"
           alt="Recipe image"
+          style="max-width: 500px; height: auto;"
         />
       </div>
       <div class="recipe-body">
@@ -118,7 +119,4 @@
     margin-right: auto;
     width: 50%;
   }
-  /* .recipe-header{
-
-} */
 </style>
