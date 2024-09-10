@@ -92,7 +92,7 @@ export default {
 
 .recipe-preview-container {
   background-color: rgba(248, 245, 237, 0.90); /* Matches the jumbotron color */
-  padding: 34px; /* Adds padding similar to jumbotron */
+  padding: 15px 30px; /* Adds padding similar to jumbotron */
   border-radius: 20px; /* Optional: rounds the corners for a softer look */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
   margin-top: 20px; /* Space above the container */
