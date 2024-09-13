@@ -32,8 +32,8 @@
             <router-link tag="b-dropdown-item" :to="{ name: 'favorites' }" class="nav-link"><b>Favorites</b></router-link>
             <router-link tag="b-dropdown-item" :to="{ name: 'private' }" class="nav-link"><b>Private</b></router-link>
             <router-link tag="b-dropdown-item" :to="{ name: 'family' }" class="nav-link"><b>Family</b></router-link>
-            
           </b-nav-item-dropdown>
+          <b-button @click="showAddRecipeModal" variant="outline-primary" class="ml-2">Add Recipe</b-button>
         </b-navbar-nav>
 
         <!-- Right aligned nav items for Guests and Users -->
@@ -54,13 +54,27 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <AddRecipeModal v-if="isAddRecipeModalVisible" @close="isAddRecipeModalVisible = false" />
   </div>
 </template>
 
 
 <script>
+import AddRecipeModal from '@/components/AddRecipeModal.vue';
+
 export default {
+  components: {
+    AddRecipeModal,
+  },
+  data() {
+    return {
+      isAddRecipeModalVisible: false,
+    };
+  },
   methods: {
+    showAddRecipeModal() {
+      this.isAddRecipeModalVisible = true;
+    },
     async Logout() {
       try {
         await this.$root.store.logout();
@@ -74,9 +88,6 @@ export default {
         console.error("Error during logout:", error);
         this.$root.toast("Logout Error", "There was an issue logging out", "error");
       }
-    },
-    navigateToAddRecipe() {
-      this.$router.push({ name: 'addRecipe' });
     },
   },
 };
@@ -125,5 +136,3 @@ export default {
 }
 
 </style>
-
-
