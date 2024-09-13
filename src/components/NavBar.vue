@@ -32,6 +32,10 @@
             <router-link tag="b-dropdown-item" :to="{ name: 'favorites' }" class="nav-link"><b>Favorites</b></router-link>
             <router-link tag="b-dropdown-item" :to="{ name: 'private' }" class="nav-link"><b>Private</b></router-link>
             <router-link tag="b-dropdown-item" :to="{ name: 'family' }" class="nav-link"><b>Family</b></router-link>
+            <b-dropdown-item @click="$bvModal.show('add-recipe-modal')" class="nav-link">
+              <b>Add New Recipe</b>
+            </b-dropdown-item>
+            
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
@@ -53,12 +57,18 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <add-recipe-modal></add-recipe-modal>
   </div>
 </template>
 
 
 <script>
+import AddRecipeModal from './AddRecipeModal.vue';
+
 export default {
+  components: {
+    AddRecipeModal,
+  },
   methods: {
     async Logout() {
       try {
@@ -73,6 +83,9 @@ export default {
         console.error("Error during logout:", error);
         this.$root.toast("Logout Error", "There was an issue logging out", "error");
       }
+    },
+    navigateToAddRecipe() {
+      this.$router.push({ name: 'addRecipe' });
     },
   },
 };
@@ -121,3 +134,5 @@ export default {
 }
 
 </style>
+
+
