@@ -28,12 +28,12 @@
 
         <!-- User Dropdown -->
         <b-navbar-nav v-if="$root.store.username">
-          <b-nav-item-dropdown text="Personal" right class="nav-link bold-option">
+          <b-nav-item-dropdown class="nav-link bold-option" variant="transparent" text="Personal">
             <router-link tag="b-dropdown-item" :to="{ name: 'favorites' }" class="nav-link"><b>Favorites</b></router-link>
             <router-link tag="b-dropdown-item" :to="{ name: 'private' }" class="nav-link"><b>Private</b></router-link>
             <router-link tag="b-dropdown-item" :to="{ name: 'family' }" class="nav-link"><b>Family</b></router-link>
           </b-nav-item-dropdown>
-          <b-button @click="showAddRecipeModal" variant="outline-primary" class="ml-2">Add Recipe</b-button>
+          <b-button @click="showAddRecipeModal" variant="transparent" class="nav-link add-recipe-link">Add Recipe</b-button>
         </b-navbar-nav>
 
         <!-- Right aligned nav items for Guests and Users -->
@@ -105,10 +105,13 @@ export default {
   color: #1e3a8a !important; /* Blue color for navbar links */
   margin: 0 10px; /* Add spacing */
   cursor: pointer; /* Make it look clickable */
+  
+  
 }
 
 .nav-link:hover, .nav-link b:hover, .bold-option:hover, .bold-option b:hover, .b-nav-item-dropdown:hover, .b-nav-item-dropdown > .dropdown-toggle:hover {
   color: #0c4a6e !important; /* Slightly darker blue on hover */
+  
 }
 
 .navbar-logo {
@@ -117,15 +120,10 @@ export default {
   margin-right: 15px; /* Space between logo and links */
 }
 
-.button {
-  color: #1e3a8a !important; /* Blue color for button text */
-  border: 1px solid #2f5d6b; /* Subtle border */
+.nav-link, .dropdown-toggle, .add-recipe-link { /* Ensure both classes are applied correctly */
+  color: rgba(108, 117, 125, 0.7) !important; /* Use the same color code */
+  font-weight: normal; /* Adjust font-weight if needed */
 }
-
-.button:hover {
-  background-color: #0c4a6e !important; /* Light coral */
-}
-
 .logout-button:hover {
   background-color: #1e3a8a !important; /* Maintain the current hover background */
   color: #ffffff !important; /* Change text color to white */
