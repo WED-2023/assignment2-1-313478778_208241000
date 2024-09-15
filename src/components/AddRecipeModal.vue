@@ -72,16 +72,16 @@
                 ></b-form-input>
               </b-form-group>
   
-              <!-- Dietary Preferences -->
               <b-form-checkbox v-model="$v.form.glutenFree.$model" switch>
-                Gluten free?
-              </b-form-checkbox>
-              <b-form-checkbox v-model="$v.form.vegan.$model" switch>
-                Vegan?
+                Gluten free
               </b-form-checkbox>
               <b-form-checkbox v-model="$v.form.vegetarian.$model" switch>
-                Vegetarian?
+                Vegetarian
               </b-form-checkbox>
+              <b-form-checkbox v-model="$v.form.vegan.$model" switch>
+                Vegan
+              </b-form-checkbox>
+              
   
               <!-- Ingredients -->
               <b-form-group label="Ingredients:" label-for="ingredients">
@@ -89,7 +89,7 @@
                   id="ingredients"
                   v-model="$v.form.ingredients.$model"
                   :state="validateState('ingredients')"
-                  placeholder="Enter ingredients separated by ','. For example: Flour - 2 cups, Sugar - 1 cup, Cocoa Powder - 0.5 cup"
+                  placeholder="Enter ingredients separated by ' , ' . For example: Flour - 2 cups, Sugar - 1 cup, Cocoa Powder - 0.5 cup"
                   rows="4"
                 ></b-form-textarea>
               </b-form-group>
@@ -100,7 +100,7 @@
                   id="prepInstructions"
                   v-model="$v.form.prepInstructions.$model"
                   :state="validateState('prepInstructions')"
-                  placeholder="Enter instructions separated by ','. For example: Preheat oven to 350°F, Mix dry ingredients, Add wet ingredients and stir until combined"
+                  placeholder="Enter instructions separated by ' , ' . For example: Preheat oven to 350°F, Mix dry ingredients, Add wet ingredients and stir until combined"
                   rows="4"
                 ></b-form-textarea>
               </b-form-group>
@@ -177,7 +177,6 @@
           return;
         }
         try {
-          // Call the server-side endpoint to create the recipe
           const response = await this.axios.post(`${this.$root.store.server_domain}/users/my_recepies`, {
             image: this.form.image,
             title: this.form.title,
@@ -233,14 +232,17 @@
   
   <style scoped>
   .add-recipe-popup {
-    width: 600px;
-    max-width: 90%;
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1051;
-    position: relative; /* To position the close button correctly */
-  }
+  width: 90%; /* Change width to a percentage for responsiveness */
+  max-width: 600px; /* Set a maximum width */
+  max-height: 90vh; /* Restrict height to 90% of the viewport height */
+  overflow-y: auto; /* Add vertical scrolling if content overflows */
+  background: white;
+  padding: 20px;
+  z-index: 1051;
+  position: relative; /* To position the close button correctly */
+}
+
+  
   
   .add-recipe-popup,
   .add-recipe-popup * {

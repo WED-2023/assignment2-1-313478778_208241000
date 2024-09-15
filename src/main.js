@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueAxios from "vue-axios";
 import axios from "axios";
-
+import { FormTextareaPlugin } from 'bootstrap-vue';
 import routes from "./routes";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
@@ -29,7 +29,9 @@ import {
   IconsPlugin,
   BadgePlugin,
   JumbotronPlugin,
+  FormCheckboxPlugin, // Add this line
 } from "bootstrap-vue";
+
 [
   FormGroupPlugin,
   FormPlugin,
@@ -45,8 +47,9 @@ import {
   ImagePlugin,
   IconsPlugin,
   BadgePlugin,
+  FormTextareaPlugin,
   JumbotronPlugin,
-
+  FormCheckboxPlugin, // Add this line
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
 
@@ -91,8 +94,6 @@ const shared_data = {
     this.username = undefined;
   },
 };
-
-// Vue.prototype.$root.store = shared_data;
 
 new Vue({
   router,
