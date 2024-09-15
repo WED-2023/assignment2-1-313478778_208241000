@@ -89,8 +89,8 @@
                   id="ingredients"
                   v-model="$v.form.ingredients.$model"
                   :state="validateState('ingredients')"
-                  placeholder="Enter ingredients separated by ' , ' . For example: Flour - 2 cups, Sugar - 1 cup, Cocoa Powder - 0.5 cup"
-                  rows="4"
+                  placeholder="Enter ingredients separated by ' , ' . For example: chicken - 1 kg, beer - 1 cup."
+                  rows="2"
                 ></b-form-textarea>
               </b-form-group>
   
@@ -100,8 +100,8 @@
                   id="prepInstructions"
                   v-model="$v.form.prepInstructions.$model"
                   :state="validateState('prepInstructions')"
-                  placeholder="Enter instructions separated by ' , ' . For example: Preheat oven to 350°F, Mix dry ingredients, Add wet ingredients and stir until combined"
-                  rows="4"
+                  placeholder="Enter instructions separated by ' , ' . For example: Preheat oven to 350°F, Mix dry ingredients."
+                  rows="2"
                 ></b-form-textarea>
               </b-form-group>
   
