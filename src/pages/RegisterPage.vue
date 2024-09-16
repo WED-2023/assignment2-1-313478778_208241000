@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <b-container>
     <register-form @submit="register"></register-form>
     <b-alert
       class="mt-2"
@@ -13,7 +13,7 @@
     <b-alert class="mt-2" v-if="loading" variant="info" show>
       Registering, please wait...
     </b-alert>
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -52,7 +52,4 @@
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    max-width: 500px;
-  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-card class="custom-card">
     <h1 class="title">Register</h1>
     <b-form @submit.prevent="onRegister" @reset.prevent="onReset">
       <!-- Username Input -->
@@ -116,7 +116,7 @@
         >
       </div>
     </b-form>
-  </div>
+  </b-card>
 </template>
 
 <script>
@@ -248,5 +248,14 @@
   .b-button {
     font-family: 'Assistant', sans-serif; /* Apply custom font */
     font-weight: 600; /* Semi-bold for buttons */
+  }
+  .custom-card {
+    background-color: rgba(248, 245, 237, 0.90) !important; /* Cream color similar to your navbar */
+    border: none; /* Optional: remove the border if not needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add subtle shadow for depth */
+    color: #1e3a8a; /* Optional: text color */
+    border-radius: 32px;
+    max-width: 520px; /* Adjust this value as needed */
+    margin: 0 auto; /* Center the card horizontally */
   }
 </style>

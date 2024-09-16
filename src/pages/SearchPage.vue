@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <b-card class="custom-card">
     <h1 class="title">Search Page</h1>
 
     <!-- Small Buttons Above Search Input -->
@@ -37,22 +37,22 @@
 
     <!-- Selected Value Display -->
     <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
-  </div>
+  </b-card>
 </template>
 
 <script>
-import { BFormSelect, BFormInput, BButton, BButtonGroup } from 'bootstrap-vue';
+// import { BFormSelect, BFormInput, BButton, BButtonGroup } from 'bootstrap-vue';
 import { cuisines } from '@/services/cuisines.js'; // Adjust the path according to your file structure
 import { diets } from '@/services/diets.js'; 
 import { intolerances } from '../services/intolerances';
 
 export default {
-  components: {
-    BFormSelect,
-    BFormInput,
-    BButton,
-    BButtonGroup
-  },
+  // components: {
+  //   BFormSelect,
+  //   BFormInput,
+  //   BButton,
+  //   BButtonGroup
+  // },
   data() {
     return {
       text: '',
@@ -139,6 +139,7 @@ export default {
   border-color: #1e3a8a !important; /* Match border color */
   background-color: transparent !important; /* Ensure no background fill */
   transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+  margin: 2px;
 }
 
 /* Active state class from the HTML: Ensuring it matches the hover state */
@@ -187,4 +188,13 @@ export default {
 .taller-input {
   height: 66px; /* Adjust height as needed */
 }
+.custom-card {
+    background-color: rgba(248, 245, 237, 0.90) !important; /* Cream color similar to your navbar */
+    border: none; /* Optional: remove the border if not needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add subtle shadow for depth */
+    color: #1e3a8a; /* Optional: text color */
+    border-radius: 32px;
+    max-width: 1000px; /* Adjust this value as needed */
+    margin: 0 auto; /* Center the card horizontally */
+  }
 </style>
