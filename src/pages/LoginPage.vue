@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <!-- <login-form /> -->
-    <LoginForm :toggleForm="toggleForm"/>
-  </div>
+  <LoginForm :toggleForm="toggleForm"/>
 </template>
 
 <script>
@@ -13,13 +10,12 @@
       LoginForm
     },
     methods: {
-      toggleForm(){
-        console.log("Toggle form called")
+      toggleForm() {
+        console.log("Toggle form called");
       }
     }
   };
 </script>
 
-<style scoped>
-  /* Add your styles here if needed */
+<style lang="scss" scoped>  
 </style>
