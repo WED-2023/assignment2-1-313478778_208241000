@@ -9,15 +9,12 @@
         <b-card class="add-recipe-popup" @click.stop>
           <!-- Close Button styled as a red X -->
           <b-button
-  variant="link"
-  @click="closeModal"
-  class="close-button"
->
-  close
-</b-button>
+            variant="link"
+             @click="closeModal"
+              class="close-button"
+          > close
+        </b-button>
 
-
-          
           <b-card-title>Add New Recipe</b-card-title>
           <b-card-body>
             <!-- Toast for Feedback -->
@@ -72,15 +69,17 @@
                 ></b-form-input>
               </b-form-group>
   
-              <b-form-checkbox v-model="$v.form.glutenFree.$model" switch>
-                Gluten free
-              </b-form-checkbox>
-              <b-form-checkbox v-model="$v.form.vegetarian.$model" switch>
-                Vegetarian
-              </b-form-checkbox>
-              <b-form-checkbox v-model="$v.form.vegan.$model" switch>
-                Vegan
-              </b-form-checkbox>
+              <b-form-group labal="Prefreances">
+                <b-form-checkbox v-model="$v.form.glutenFree.$model" switch>
+                  Gluten free
+                </b-form-checkbox>
+                <b-form-checkbox v-model="$v.form.vegetarian.$model" switch>
+                  Vegetarian
+                </b-form-checkbox>
+                <b-form-checkbox v-model="$v.form.vegan.$model" switch>
+                  Vegan
+                </b-form-checkbox>
+              </b-form-group>
               
   
               <!-- Ingredients -->
