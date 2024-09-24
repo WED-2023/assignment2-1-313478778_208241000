@@ -1,5 +1,5 @@
 <template>
-  <LoginForm :toggleForm="toggleForm"/>
+  <LoginForm/>
 </template>
 
 <script>
@@ -10,9 +10,9 @@
       LoginForm
     },
     methods: {
-      toggleForm() {
-        console.log("Toggle form called");
-      }
+      // toggleForm() {
+      //   //"Will Never Get Called
+      // }
     }
   };
 </script>

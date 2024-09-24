@@ -11,11 +11,11 @@
         id="input-group-Username"
         label-cols-sm="4"
         label="Username:"
-        label-for="Username"
+        label-for="username"
       >
         <!-- Input bound to Vuelidate's $model for validation -->
         <b-form-input
-          id="Username"
+          id="username"
           v-model="$v.form.username.$model"
           type="text"
           :state="validateState('username')"
@@ -35,7 +35,7 @@
       >
         <!-- Input bound to Vuelidate's $model for validation -->
         <b-form-input
-          id="Password"
+          id="password"
           type="password"
           v-model="$v.form.password.$model"
           :state="validateState('password')"
@@ -51,7 +51,7 @@
         :disabled="isSubmitting"
         type="submit"
         variant="primary"
-        style="width:100px;display:block;"
+        style="width:100px;"
         class="mx-auto w-100"
       >
         Login
@@ -61,10 +61,9 @@
       <div class="mt-4">
         Do not have an account yet?
         <span
-          style="cursor: pointer; text-decoration: underline; color: #0000EE"
+          class="register-prompt"
           @click="handleToggleForm"
-        >
-          Register here
+        >Register here
         </span>
       </div>
     </b-form>
@@ -93,7 +92,7 @@
       // Prop to allow toggling between login and register forms
       toggleForm: {
         type: Function,
-        required: true,
+        // required: true,
       },
     },
     data() {
@@ -228,5 +227,12 @@
     border-radius: 32px;
     max-width: 500px; /* Adjust this value as needed */
     margin: 0 auto; /* Center the card horizontally */
+  }
+
+  .register-prompt {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #0000EE; /* Apply your blue color */
+    font-family: 'Assistant', sans-serif; /* Apply custom font */
   }
 </style>

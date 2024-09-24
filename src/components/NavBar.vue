@@ -4,14 +4,14 @@
     
     <!-- Navbar Brand with Logo -->
     <!-- Clickable router-link redirects to the main route (Home) -->
-    <router-link :to="{ name: 'main' }" class="navbar-brand">
+    <b-nav-item :to="{ name: 'main' }" class="navbar-brand">
       <!-- Display logo image, imported via require -->
       <b-img
         :src="require('@/assets/main_chef_logo.png')"
         alt="Chef Logo"
         class="navbar-logo"
       />
-    </router-link>
+    </b-nav-item>
 
     <!-- Toggle button for expanding/collapsing the navbar on smaller screens -->
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle> 
