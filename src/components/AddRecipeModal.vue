@@ -199,12 +199,14 @@
     this.toastMessage = `Recipe "${this.form.title}" created successfully!`;
     this.toastVariant = 'success';
     this.toastVisible = true;
-    this.onReset();
-    this.$emit('close');
+    setTimeout(() => {
+      this.onReset();
+      this.$emit('close');
+    }, 3000); // make the toast disappear after 3 seconds
   } catch (err) {
     console.log(err.response);
     this.toastTitle = 'Error';
-    this.toastMessage = err.response ? err.response.data : 'Failed to create recipe';
+    this.toastMessage = err.response && err.response.data.message ? err.response.data.message : 'Failed to create recipe';
     this.toastVariant = 'danger';
     this.toastVisible = true;
   }
