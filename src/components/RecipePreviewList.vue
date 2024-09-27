@@ -10,16 +10,25 @@
       </b-col>
       <b-col class="text-right">
         <!-- Hover and click icon aligned to the right -->
-        <b-iconstack @click="refreshRecipes" class="rotate-on-hover" font-scale="2.8">
-          <b-icon stacked icon="circle-fill" variant="success"></b-icon>
-          <b-icon stacked icon="arrow-repeat" scale="0.8" variant="white"></b-icon>
-        </b-iconstack>
+        <div v-if="parentPageName === 'main'">
+          <!-- Main page: Hover and click icon aligned to the right -->
+          <b-iconstack @click="refreshRecipes" class="rotate-on-hover" font-scale="2.8">
+            <b-icon stacked icon="circle-fill" variant="success"></b-icon>
+            <b-icon stacked icon="arrow-repeat" scale="0.8" variant="white"></b-icon>
+          </b-iconstack>
+        </div>
+        <div v-else-if="parentPageName === 'favorites' || parentPageName === 'private'">
+          <!-- Favorites or Private page: Left and right arrows -->
+          <b-icon icon="arrow-left-circle-fill" variant="success" font-scale="2.8" class="mr-2"></b-icon>
+          <b-icon icon="arrow-right-circle-fill" variant="success" font-scale="2.8" class="mr-2"></b-icon>
+        </div>
       </b-col>
     </b-row>
     <!-- Recipe previews displayed in a row -->
       <b-row class="mt-4" v-for="r in recipes" :key="r.id">
         <RecipePreview :recipe="r"/>
       </b-row>
+      
    
   </b-container>
 </template>
@@ -33,19 +42,21 @@ export default {
   components: {
     RecipePreview, // Registering the RecipePreview component
   },
-  props: {
+  props:{
     title: {
       type: String,
       required: true // Title prop is required
-    }
+    },
   },
   data() {
     return {
-      recipes: [] // Array to hold fetched recipes
+      recipes: [], // Array to hold fetched recipes
+      parentPageName: '',
     };
   },
   mounted() {
     this.updateRecipes(); // Fetch recipes when the component is mounted
+    this.determineParentPageName(); // Set pageType based on the current route
   },
   methods: {
     async updateRecipes() {
@@ -74,6 +85,16 @@ export default {
     },
     refreshRecipes() {
       this.updateRecipes(); // Fetch 3 new random recipes when the icon is clicked
+    },
+    determineParentPageName() {
+      const routeName = this.$route.name;
+      if (routeName === 'main') {
+        this.parentPageName = 'main';
+      } else if (routeName === 'favorites') {
+        this.parentPageName = 'favorites';
+      } else if (routeName === 'private') {
+        this.parentPageName = 'private';
+      }
     }
   }
 };

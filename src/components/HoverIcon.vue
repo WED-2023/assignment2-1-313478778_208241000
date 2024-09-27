@@ -59,6 +59,9 @@ export default {
       event.stopPropagation(); // Prevent click from affecting parent card
       this.isFilled = !this.isFilled; // Toggle the filled state
       this.currentIcon = this.isFilled ? this.iconName + '-fill' : this.iconName; // Update icon
+      // Emit event to notify parent component if it's being added or removed from favorites
+      // console.log('Emitting toggle-favorite with state:', this.isFilled); //debug
+      this.$emit('toggle-favorite', this.isFilled); // Pass the filled state (true for add, false for remove)
     }
   }
 }

@@ -15,7 +15,7 @@
               :style="imageStyle"
               @load="onImageLoad"
             ></b-card-img>
-            <hover-icon v-if="this.$root.store.username" class="icon-overlay" iconName="star"></hover-icon>
+            <hover-icon v-if="this.$root.store.username" class="icon-overlay" iconName="star" @toggle-favorite="onFavoriteToggle"></hover-icon>
           </div>
         </b-col>
         <b-col md="6">
@@ -136,6 +136,44 @@ export default {
     onImageLoad(event) {
       this.imageHeight = event.target.height; // Get image height
       this.$forceUpdate(); // Ensure the component re-renders with the new height
+    },
+    
+        /**
+     * Handles the process of adding or removing a recipe to/from the favorites.
+     * Sends a request to the API depending on the action (add/remove).
+     * @param {Boolean} isAdding - Whether to add (true) or remove (false) the recipe from favorites.
+     */
+    async toggleFavorite(isAdding) {
+      const recipeId = this.recipe.id;
+
+      try {
+        let response;
+        if (isAdding) {
+          // Add recipe to favorites
+          response = await axios.post(`${this.$root.store.server_domain}/user/favorites/add`, { recipeId }, { withCredentials: true });
+          console.log('Recipe added to favorites:', response.data);
+        } else {
+          // Remove recipe from favorites
+          response = await axios.delete(`${this.$root.store.server_domain}/user/favorites/remove`, { recipeId }, { withCredentials: true });
+          console.log('Recipe removed from favorites:', response.data);
+        }
+
+        // Handle success message if needed
+        // this.form.submitError = null;
+      } catch (err) {
+        // Handle error during the API request
+        const errorMessage = err.response?.data?.message || 'An error occurred. Please try again.';
+        console.error('Favorite action failed:', err);
+      }
+    },
+        /**
+     * Triggered when the user clicks to add/remove a recipe from favorites.
+     * Calls the toggleFavorite method and manages UI state.
+     * @param {Boolean} isAdding - Whether to add or remove the recipe from favorites.
+     */
+    onFavoriteToggle(isAdding) {
+      // this.form.submitError = undefined; // Clear any previous errors
+      this.toggleFavorite(isAdding); // Perform the favorite toggle action
     },
   },
   mounted() {

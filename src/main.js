@@ -82,7 +82,7 @@ Vue.config.productionTip = false;
 
 const shared_data = {
   server_domain: "http://localhost:3000",
-  username: localStorage.username,
+  username: localStorage.getItem("username") || undefined,
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;
@@ -103,15 +103,18 @@ new Vue({
     };
   },
   methods: {
-    toast(title, content, variant = null, append = false) {
-      this.$bvToast.toast(`${content}`, {
+    toast(title, content, variant = null, noAutoHide = false, append = false) {
+      const options = {
         title: `${title}`,
         toaster: "b-toaster-top-center",
         variant: variant,
         solid: true,
         appendToast: append,
-        autoHideDelay: 3000,
-      });
+        noAutoHide: noAutoHide,
+        autoHideDelay: noAutoHide ? undefined : 5000,
+      };
+
+      this.$bvToast.toast(`${content}`, options);
     },
   },
   render: (h) => h(App),
