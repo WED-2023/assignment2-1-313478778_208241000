@@ -1,6 +1,6 @@
 [
   {
-    "title": "Couscous with Vegetables",
+    "title": "Vegie Couscous",
     "madeBy": "Amit's mom",
     "occasion": "Shabbat Dinner",
     "image": "@/assets/family/couscus.webp",
@@ -20,7 +20,11 @@
       "Boil the vegetable broth and pour it over the couscous in a bowl.",
       "Cover the bowl and let the couscous absorb the broth for about 5 minutes.",
       "Fluff the couscous with a fork, mix in the sautéed vegetables, and season with salt and pepper."
-    ]
+    ],
+    "vegetarian": true,
+    "vegan": true,
+    "glutenFree": false,
+    "readyInMinutes": 30
   },
   {
     "title": "Kibbeh",
@@ -42,7 +46,11 @@
       "Shape into small balls or patties.",
       "Heat oil in a deep pan and fry kibbeh until golden brown and crispy.",
       "Serve with yogurt or tahini sauce."
-    ]
+    ],
+    "vegetarian": false,
+    "vegan": false,
+    "glutenFree": false,
+    "readyInMinutes": 60
   },
   {
     "title": "Schnitzel and Rice",
@@ -66,10 +74,14 @@
       "Heat oil in a pan and fry the schnitzels until golden brown.",
       "Cook rice in water with butter until fluffy.",
       "Serve schnitzels hot with rice on the side."
-    ]
+    ],
+    "vegetarian": false,
+    "vegan": false,
+    "glutenFree": false,
+    "readyInMinutes": 45
   },
   {
-    "title": "Ikra on Bread with Butter",
+    "title": "Ikra with Butter",
     "madeBy": "Itay's grandmother",
     "occasion": "Holiday Breakfast",
     "image": "@/assets/family/ikra.webp",
@@ -86,7 +98,11 @@
       "Mix in garlic, olive oil, salt, and pepper.",
       "Spread butter on slices of bread, then top with eggplant caviar.",
       "Serve as an appetizer or snack."
-    ]
+    ],
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": false,
+    "readyInMinutes": 25
   },
   {
     "title": "Stir-Fried Tofu",
@@ -109,10 +125,14 @@
       "Add bell pepper, zucchini, and onion, and stir-fry until tender.",
       "Season with soy sauce, salt, and pepper.",
       "Serve hot with rice or noodles."
-    ]
+    ],
+    "vegetarian": true,
+    "vegan": true,
+    "glutenFree": true,
+    "readyInMinutes": 40
   },
   {
-    "title": "Borscht (Russian Beetroot Soup)",
+    "title": "Borscht",
     "madeBy": "Itay's mother",
     "occasion": "Winter Holiday",
     "image": "@/assets/family/beetroot_soup.webp",
@@ -133,6 +153,10 @@
       "Add onions, carrots, potatoes, beetroots, and cabbage.",
       "Stir in tomato paste, season with salt and pepper, and simmer until vegetables are soft.",
       "Serve hot, garnished with sour cream and fresh dill."
-    ]
+    ],
+    "vegetarian": false,
+    "vegan": false,
+    "glutenFree": true,
+    "readyInMinutes": 90
   }
 ]

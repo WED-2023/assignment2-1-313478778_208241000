@@ -1,3 +1,4 @@
+
 <template>
     <div>
       <b-overlay
@@ -117,7 +118,8 @@
   
               <div class="d-flex justify-content-end">
                 <b-button type="reset" pill class="btn-primary">Reset</b-button>
-                <b-button variant="primary" vartype="submit" pill class="ml-3 w-70">Create Recipe</b-button>
+                <b-button variant="primary" type="submit" pill class="ml-3 w-70">Create Recipe</b-button>
+
               </div>
             </b-form>
           </b-card-body>
@@ -128,7 +130,7 @@
   
   <script>
   import { required } from 'vuelidate/lib/validators';
-  
+
   export default {
     props: {
       isVisible: {
@@ -176,31 +178,38 @@
           return;
         }
         try {
-          const response = await this.axios.post(`${this.$root.store.server_domain}/users/my_recepies`, {
-            image: this.form.image,
-            title: this.form.title,
-            readyInMinutes: this.form.readyInMinutes,
-            glutenFree: this.form.glutenFree,
-            vegan: this.form.vegan,
-            vegetarian: this.form.vegetarian,
-            ingredients: this.form.ingredients,
-            instructions: this.form.prepInstructions,
-            numberOfDishes: this.form.numberOfDishes,
-          },
-          { withCredentials: true });
-          this.toastTitle = 'Success';
-          this.toastMessage = `Recipe "${this.form.title}" created successfully!`;
-          this.toastVariant = 'success';
-          this.toastVisible = true;
-          this.onReset();
-          this.$emit('close');
-        } catch (err) {
-          console.log(err.response);
-          this.toastTitle = 'Error';
-          this.toastMessage = err.response ? err.response.data : 'Failed to create recipe';
-          this.toastVariant = 'danger';
-          this.toastVisible = true;
-        }
+    // Split instructions and ingredients into arrays (assuming they are comma-separated in the form)
+    const ingredientsArray = this.form.ingredients.split(',').map(item => item.trim());
+    const instructionsArray = this.form.prepInstructions.split(',').map(item => item.trim());
+
+    const response = await this.axios.post(`${this.$root.store.server_domain}/user/addRecipe`, {
+      image_url: this.form.image,
+      recipe_name: this.form.title,
+      readyInMinutes: this.form.readyInMinutes,
+      glutenFree: this.form.glutenFree,
+      vegan: this.form.vegan,
+      vegetarian: this.form.vegetarian,
+      ingredients: ingredientsArray,  // Send as an array
+      instructions: instructionsArray, // Send as an array
+      numberOfDishes: this.form.numberOfDishes,
+    },
+    { withCredentials: true });
+    
+    this.toastTitle = 'Success';
+    this.toastMessage = `Recipe "${this.form.title}" created successfully!`;
+    this.toastVariant = 'success';
+    this.toastVisible = true;
+    setTimeout(() => {
+      this.onReset();
+      this.$emit('close');
+    }, 3000); // make the toast disappear after 3 seconds
+  } catch (err) {
+    console.log(err.response);
+    this.toastTitle = 'Error';
+    this.toastMessage = err.response && err.response.data.message ? err.response.data.message : 'Failed to create recipe';
+    this.toastVariant = 'danger';
+    this.toastVisible = true;
+  }
       },
       onReset() {
         this.form = {

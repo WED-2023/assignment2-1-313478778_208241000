@@ -29,7 +29,7 @@ import {
   IconsPlugin,
   BadgePlugin,
   JumbotronPlugin,
-  FormCheckboxPlugin, // Add this line
+  FormCheckboxPlugin,
 } from "bootstrap-vue";
 
 [

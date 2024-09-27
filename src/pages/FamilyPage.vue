@@ -15,6 +15,17 @@
         <img :src="recipe.image" :alt="recipe.title" class="recipe-image" />
         <h2>{{ recipe.title }}</h2>
         <p>{{ recipe.madeBy }} | {{ recipe.occasion }}</p>
+    <!-- Time on the left -->
+    <div class="recipe-details">
+    <div class="time-details">
+      {{ recipe.readyInMinutes }} min. <b-icon-stopwatch font-scale="1.5" />
+    </div>
+    <div class="dietary-icons">
+      <img v-if="recipe.vegetarian" src="@/assets/vegetarian_logo.png" alt="Vegetarian" width="30" />
+      <img v-if="recipe.vegan" src="@/assets/vegan_logo.png" alt="Vegan" width="30" />
+      <img v-if="recipe.glutenFree" src="@/assets/gluten_free_logo.png" alt="Gluten Free" width="30" />
+    </div>
+  </div>
       </div>
     </div>
 
@@ -25,6 +36,20 @@
           <img :src="selectedRecipe.image" :alt="selectedRecipe.title" class="modal-image" />
           <h2 class="modal-title">{{ selectedRecipe.title }}</h2>
         </div>
+        <div class="recipe-details">
+    <!-- Time on the left -->
+    <div class="time-details">
+      <b-icon-stopwatch font-scale="1.5" /> {{ selectedRecipe.readyInMinutes }} min
+    </div>
+    
+    <!-- Dietary icons on the right -->
+    <div class="dietary-icons">
+      <img v-if="selectedRecipe.vegetarian" src="@/assets/vegetarian_logo.png" alt="Vegetarian" width="50" />
+      <img v-if="selectedRecipe.vegan" src="@/assets/vegan_logo.png" alt="Vegan" width="50" />
+      <img v-if="selectedRecipe.glutenFree" src="@/assets/gluten_free_logo.png" alt="Gluten Free" width="50" />
+    </div>
+  </div>
+
         <p class="modal-text"><strong>Made by:</strong> {{ selectedRecipe.madeBy }}</p>
         <p class="modal-text"><strong>Occasion:</strong> {{ selectedRecipe.occasion }}</p>
         <h3 class="modal-subtitle">Ingredients:</h3>
@@ -122,6 +147,31 @@ export default {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
   font-family: 'Assistant', sans-serif;
 }
+.recipe-details {
+  display: flex;
+  justify-content: space-between; /* Time on left, icons on right */
+  align-items: center;
+  margin-top: 10px;
+}
+
+.time-details {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Ensure time stays on the left */
+  gap: 5px;
+}
+
+.dietary-icons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Ensure icons stay on the right */
+}
+.dietary-icons img {
+  width: 40px;  /* Set a fixed width for all icons */
+  height: 40px; /* Set a fixed height for all icons */
+  object-fit: contain; /* Ensure the icons maintain their aspect ratio within the given size */
+}
+
 
 .recipe-card:hover {
   transform: scale(1.05);

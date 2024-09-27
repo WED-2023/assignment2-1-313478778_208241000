@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkassignment_2_1"]=self["webpackChunkassignment_2_1"]||[]).push([[965],{4965:(e,n,s)=>{s.r(n),s.d(n,{default:()=>_});var t=function(){var e=this;e._self._c;return e._m(0)},l=[function(){var e=this,n=e._self._c;return n("div",[n("h1",[e._v("Hello private Page")])])}],u=s(1001),r={},a=(0,u.Z)(r,t,l,!1,null,null,null);const _=a.exports}}]);
+//# sourceMappingURL=965.43f8984c.js.map
