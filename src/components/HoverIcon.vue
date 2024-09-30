@@ -28,7 +28,11 @@ export default {
     isFavorite:{
       type: Boolean,
       required: true
-    }
+    },
+    // recipeId:{
+    //   type: Number,
+    //   required: true,
+    // },
   },
   data() {
     return {
@@ -66,6 +70,10 @@ export default {
       // Emit event to notify parent component if it's being added or removed from favorites
       // console.log('Emitting toggle-favorite with state:', this.isFilled); //debug
       this.$emit('toggle-favorite', this.isFilled); // Pass the filled state (true for add, false for remove)
+
+      // this.$emit('toggle-favorite',{
+      // isFavorite: this.isFilled,
+      // recipeId: this.recipeId,}); // Pass the filled state (true for add, false for remove)
     }
   }
 }

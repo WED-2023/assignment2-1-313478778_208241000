@@ -146,13 +146,13 @@ export default {
           console.log('Recipe added to favorites:', response.data);
         } else {
           // Remove recipe from favorites
-          // response = await axios.delete(`${this.$root.store.server_domain}/user/favorites/remove`, { recipeId }, { withCredentials: true });
           response = await axios.delete(`${this.$root.store.server_domain}/user/favorites/remove`, {
             data: { recipeId },
             withCredentials: true,
           });
           console.log('Recipe removed from favorites:', response.data);
         }
+        this.$emit('favorite-toggled', recipeId); // Emit the result to the parent
 
         // Handle success message if needed
         // this.form.submitError = null;
@@ -163,8 +163,9 @@ export default {
       }
     },
 
-    onFavoriteToggle(isAdding) {
-      this.toggleFavorite(isAdding); // Perform the favorite toggle action
+    onFavoriteToggle(isFavortie) {
+      this.recipe.isFavortie = isFavortie
+      this.toggleFavorite(isFavortie); // Perform the favorite toggle action
     },
 
     goToRecipe() {

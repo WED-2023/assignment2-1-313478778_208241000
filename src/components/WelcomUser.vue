@@ -50,7 +50,8 @@ export default {
   color: #1e3a8a !important; /* Use the same blue color as the navbar text */
   border: 1px solid rgba(228, 218, 202, 0.9); /* Optional: Add a subtle border */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
-  margin-top: 220px;
+  margin-top: 180px !important;
+  margin-bottom: 120px !important;
 }
 
 .custom-jumbotron h1,

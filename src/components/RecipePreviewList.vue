@@ -41,7 +41,7 @@
     </b-row>
     <!-- Recipe previews displayed in a row -->
     <b-row class="mt-4" v-for="r in displayedRecipes" :key="r.id">
-      <RecipePreview :recipe="r" />
+      <RecipePreview :recipe="r" @favorite-toggled="handleFavoriteToggle"/> 
     </b-row>
   </b-container>
 </template>
@@ -81,6 +81,7 @@ export default {
       const totalPages = Math.ceil(totalRecipes / this.pageSize);
       return this.currentPage < totalPages - 1;
     },
+    
   },
   mounted() {
     this.determineParentPageName(); // Set pageType based on the current route
@@ -150,6 +151,54 @@ export default {
       } else if (routeName === "private") {
         this.parentPageName = "private";
       }
+    },
+    handleFavoriteToggle(recipeId) {
+      if (this.parentPageName === 'favorites') {
+        const recipeIndex = this.recipes.findIndex(r => r.id === recipeId);
+        
+        // If the recipe is found in the favorites
+        if (recipeIndex !== -1) {
+          // Remove the recipe from the favorites list
+          this.recipes.splice(recipeIndex, 1); // Remove from the full favorites list
+          
+          // Now check if the recipe is in the currently displayed list
+          const displayedIndex = this.displayedRecipes.findIndex(r => r.id === recipeId);
+          
+          // If the recipe is displayed, remove it from the displayed list
+          if (displayedIndex !== -1) {
+            this.displayedRecipes.splice(displayedIndex, 1); // Remove from displayed list
+            
+            // Now, we need to check if we can fill the gap
+            this.fillDisplayedRecipes();
+          }
+        } else {
+          // If the recipe is not found, it means it was already removed (if applicable)
+          console.warn('Recipe not found in favorites:', recipeId);
+        }
+      }
+    },
+    fillDisplayedRecipes() {
+      // Calculate how many more recipes are needed
+      const numberOfNeededRecipes = this.pageSize - this.displayedRecipes.length;
+      
+      if (numberOfNeededRecipes > 0) {
+        // Start filling from the next recipe in the full list
+        const startIndex = this.currentPage * this.pageSize;
+        
+        // Loop through the remaining recipes and add them to displayedRecipes
+        for (let i = startIndex + this.pageSize; i < this.recipes.length && numberOfNeededRecipes > 0; i++) {
+          this.displayedRecipes.push(this.recipes[i]); // Add next available recipe
+          numberOfNeededRecipes--; // Decrease the count of needed recipes
+        }
+      }
+      
+      // Update the current page if displayedRecipes is empty
+      if (this.displayedRecipes.length === 0 && this.hasPreviousPage) {
+        this.previousPage(); // Navigate to the previous page
+      }
+      
+      // If necessary, you may call updateDisplayedRecipes() if needed to ensure state consistency
+      this.updateDisplayedRecipes();
     },
   },
 };
