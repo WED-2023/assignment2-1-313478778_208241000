@@ -55,8 +55,8 @@ export default {
     };
   },
   mounted() {
-    this.updateRecipes(); // Fetch recipes when the component is mounted
     this.determineParentPageName(); // Set pageType based on the current route
+    this.updateRecipesBackEnd(); // Fetch recipes when the component is mounted
   },
   methods: {
     async updateRecipes() {
@@ -75,6 +75,29 @@ export default {
         console.log(error);
       }
     },
+    async updateRecipesBackEnd() {
+      try {
+        // If on the main page, fetch recipes from the backend
+        if (this.parentPageName === "main") {
+          const numberOfRecipesToDisplay = 3; // Number of recipes to display
+          const response = await this.axios.get(
+            `${this.$root.store.server_domain}/recipes/random`, {
+            params: { number: numberOfRecipesToDisplay },
+          }, {withCredentials: true});
+          this.recipes = response.data; // Set recipes to the fetched data
+        } else if (this.parentPageName === "favorites") {
+            const response = await this.axios.get(`${this.$root.store.server_domain}/user/favorites/show`, {withCredentials: true});
+            this.recipes = response.data; // Set recipes to the fetched favorite recipes
+        }
+         else {
+          // Use mock data or other logic for non-main pages (if needed)
+          const response = mockGetRecipesPreview(3);
+          this.recipes = response.data.recipes;
+        }
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    },
     shuffleArray(array) {
       // Fisher-Yates (Knuth) Shuffle
       for (let i = array.length - 1; i > 0; i--) {
@@ -84,7 +107,8 @@ export default {
       return array;
     },
     refreshRecipes() {
-      this.updateRecipes(); // Fetch 3 new random recipes when the icon is clicked
+      // this.updateRecipes(); // Fetch 3 new random recipes when the icon is clicked
+      this.updateRecipesBackEnd(); // Fetch 3 new random recipes when the icon is clicked
     },
     determineParentPageName() {
       const routeName = this.$route.name;

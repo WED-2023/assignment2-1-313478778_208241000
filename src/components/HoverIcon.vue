@@ -24,12 +24,16 @@ export default {
     fontScale: {
       type: Number,
       default: 1.7 // Default size scale
+    },
+    isFavorite:{
+      type: Boolean,
+      required: true
     }
   },
   data() {
     return {
-      isFilled: false, // State to track if the icon is filled
-      currentIcon: this.iconName // Set initial icon name
+      isFilled: this.isFavorite, // State to track if the icon is filled
+      currentIcon: this.isFavorite ? this.iconName + '-fill' : this.iconName // Set initial icon name based on isFavorie
     };
   },
   computed: {
