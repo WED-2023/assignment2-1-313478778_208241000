@@ -104,7 +104,7 @@ export default {
       this.searchQueryEmpty = false;
 
       try {
-        const response = await axios.get("http://localhost:3000/recipes/search", {
+        const response = await axios.get(`${this.$root.store.server_domain}/recipes/search`, {
           params: {
             recipeName: this.text,
             cuisine: this.selects[0].selected ? this.selects[0].selected : null,
@@ -120,7 +120,7 @@ export default {
         // Fetch details for each recipe
         for (const result of results) {
           const currentId = result.id;
-          const currentRecipeInfo = await axios.get(`http://localhost:3000/recipes/${currentId}/information`);
+          const currentRecipeInfo = await axios.get(`${this.$root.store.server_domain}/recipes/${currentId}/information`);
           allRecipes.push(currentRecipeInfo.data);
         }
 
