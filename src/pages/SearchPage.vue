@@ -22,8 +22,8 @@
     <div class="d-flex justify-content-between align-items-center mt-3">
       <b-form-input v-model="text" placeholder="Look for a recipe..." class="w-75 taller-input mr-2"></b-form-input>
       <div>
-        <b-button class="btn-lg search-button">Search</b-button> <!-- Larger button -->
-        <b-button variant="secondary" class="ml-2 btn-lg" @click="resetSearch">Reset</b-button> <!-- Smaller button -->
+        <b-button class="btn-lg search-button" @click="performSearch">Search</b-button>
+        <b-button variant="secondary" class="ml-2 btn-lg" @click="resetSearch">Reset</b-button>
       </div>
     </div>
 
@@ -35,39 +35,35 @@
       </div>
     </div>
 
-    <!-- Selected Value Display -->
-    <!-- <div class="mt-3">Selected: <strong>{{ selected }}</strong></div> -->
+    <!-- Recipe Preview List -->
+    <RecipePreviewList :numberOfRecipes="parseInt(selectedResult)" :recipes="recipes" v-if="recipes.length > 0" />
   </b-card>
 </template>
 
 <script>
-// import { BFormSelect, BFormInput, BButton, BButtonGroup } from 'bootstrap-vue';
-import { cuisines } from '@/services/cuisines.js'; // Adjust the path according to your file structure
-import { diets } from '@/services/diets.js'; 
-import { intolerances } from '../services/intolerances';
+import axios from "axios";
+import RecipePreviewList from "../components/RecipePreviewList.vue";
+import { cuisines } from "@/services/cuisines.js"; 
+import { diets } from "@/services/diets.js";
+import { intolerances } from "@/services/intolerances.js";
 
 export default {
-  // components: {
-  //   BFormSelect,
-  //   BFormInput,
-  //   BButton,
-  //   BButtonGroup
-  // },
+  components: {
+    RecipePreviewList,
+  },
   data() {
     return {
       text: '',
-      selectedResult: '5', // Set default value here
+      selectedResult: '5', // Default number of results
       selects: [
         { title: 'Cuisine', selected: null, options: [] },
         { title: 'Diet', selected: null, options: [] },
         { title: 'Intolerance', selected: null, options: [] }
-      ]
+      ],
+      recipes: [], // To store search results
     };
   },
   computed: {
-    selected() {
-      return this.selects.map(select => select.selected);
-    },
     results() {
       return ['5', '10', '15'];
     }
@@ -90,29 +86,69 @@ export default {
           break;
         case 2:
           select.options = [
-              { value: null, text: 'Please select an intolerance' },
-              ...intolerances.map(intolerance => ({ value: intolerance.toLowerCase(), text: intolerance }))
-            ];
-            break;
+            { value: null, text: 'Please select an intolerance' },
+            ...intolerances.map(intolerance => ({ value: intolerance.toLowerCase(), text: intolerance }))
+          ];
+          break;
         default:
           select.options = [];
       }
     });
   },
   methods: {
+    async performSearch() {
+      if (this.text.trim() === '') {
+        this.searchQueryEmpty = true;
+        return;
+      }
+      this.searchQueryEmpty = false;
+
+      try {
+        const response = await axios.get("http://localhost:3000/recipes/search", {
+          params: {
+            recipeName: this.text,
+            cuisine: this.selects[0].selected ? this.selects[0].selected : null,
+            diet: this.selects[1].selected ? this.selects[1].selected : null,
+            intolerance: this.selects[2].selected ? this.selects[2].selected : null,
+            number: this.selectedResult
+          }
+        });
+
+        const results = response.data;
+        const allRecipes = [];
+
+        // Fetch details for each recipe
+        for (const result of results) {
+          const currentId = result.id;
+          const currentRecipeInfo = await axios.get(`http://localhost:3000/recipes/${currentId}/information`);
+          allRecipes.push(currentRecipeInfo.data);
+        }
+
+        this.recipes = allRecipes;
+        this.searchPerformed = true;
+        this.noResultsFound = allRecipes.length === 0;
+      } catch (error) {
+        console.error("Search failed:", error);
+        this.noResultsFound = true;
+      }
+    },
     selectResult(result) {
       this.selectedResult = result;
-      // Perform any other actions when selecting a result
     },
     resetSearch() {
       this.text = '';
       this.selects.forEach(select => {
         select.selected = null;
       });
+      this.recipes = [];
+      this.searchPerformed = false;
+      this.noResultsFound = false;
     }
   }
 };
 </script>
+
+
 
 <style scoped>
 .container {
