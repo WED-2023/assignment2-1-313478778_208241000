@@ -58,72 +58,72 @@ export default {
       if (savedRecipe) {
         // If a saved recipe is found, parse it
         const savedRecipeParsed = JSON.parse(savedRecipe);
-
-        // Apply the same instruction processing logic
-        const _instructions = savedRecipeParsed.analyzedInstructions.length
-          ? savedRecipeParsed.analyzedInstructions.flatMap(fstep => 
-              fstep.steps.map(step => ({
-                step: `${fstep.name ? fstep.name + ": " : ""}${step.step}`
-              }))
-            )
-          : [{ step: "No instructions available." }];
-
-        // Set the recipe data with processed instructions
-        this.recipe = { ...savedRecipeParsed, _instructions };
+        this.processRecipe(savedRecipeParsed);
       } else {
-        // Step 2: If not found, make an API call to fetch the recipe
-        const response = await mockGetRecipeFullDetails(this.$route.params.recipeId);
-
-        const {
-          analyzedInstructions,
-          instructions,
-          extendedIngredients,
-          aggregateLikes,
-          readyInMinutes,
-          servings,
-          image,
-          title,
-          id,
-          vegetarian,
-          vegan,
-          glutenFree,
-          summary,
-        } = response.data.recipe;
-
-        // Process instructions similarly to before
-        const _instructions = analyzedInstructions.length
-          ? analyzedInstructions.flatMap(fstep => 
-              fstep.steps.map(step => ({
-                step: `${fstep.name ? fstep.name + ": " : ""}${step.step}`
-              }))
-            )
-          : [{ step: "No instructions available." }];
-
-        // Create the complete recipe object
-        const _recipe = {
-          instructions,
-          _instructions,
-          analyzedInstructions,
-          extendedIngredients,
-          aggregateLikes,
-          readyInMinutes,
-          servings,
-          image,
-          title,
-          id,
-          vegetarian,
-          vegan,
-          glutenFree,
-          summary,
-        };
-
-        // Step 3: Set the recipe data and save it in sessionStorage for future use
-        this.recipe = _recipe;
-        sessionStorage.setItem('currentRecipe', JSON.stringify(_recipe));
+        // Step 2: If not found in sessionStorage, fetch recipe based on public or private
+        if (this.isPrivateRecipe()) {
+          await this.fetchPrivateRecipe(this.$route.params.recipeId);
+        } else {
+          await this.fetchPublicRecipe(this.$route.params.recipeId);
+        }
       }
     } catch (error) {
       console.log(error);
     }
+  },
+  methods: {
+    // Determine if the recipe is private
+    isPrivateRecipe() {
+      return this.$route.name === 'privateRecipe'; // Adjust based on how you detect private recipes
+    },
+
+    // Fetch private recipe details
+    async fetchPrivateRecipe(recipeId) {
+      try {
+        const response = await this.axios.get(`${this.$root.store.server_domain}/user/PrivateRecipes/${recipeId}/view`, { withCredentials: true });
+        this.processRecipe(response.data);
+      } catch (error) {
+        console.error('Error fetching private recipe:', error);
+      }
+    },
+
+    // Fetch public recipe details
+    async fetchPublicRecipe(recipeId) {
+      const response = await mockGetRecipeFullDetails(recipeId);
+      this.processRecipe(response.data.recipe);
+    },
+
+    // Process and transform recipe data
+    processRecipe(rawRecipe) {
+      // Determine if the recipe is private based on structure
+      const isPrivate = rawRecipe.instructions && typeof rawRecipe.instructions === 'string';
+
+      // Process instructions and ingredients based on recipe type
+      let _instructions = [];
+      let extendedIngredients = [];
+
+      if (isPrivate) {
+        // Process private recipe data
+        _instructions = rawRecipe.instructions.split(',').map(step => ({ step: step.trim() }));
+        extendedIngredients = rawRecipe.ingredients.split(',').map(ingredient => ({ original: ingredient.trim() }));
+      } else {
+        // Process public recipe data
+        _instructions = rawRecipe.analyzedInstructions.length
+          ? rawRecipe.analyzedInstructions.flatMap(fstep => 
+              fstep.steps.map(step => ({
+                step: `${fstep.name ? fstep.name + ": " : ""}${step.step}`
+              }))
+            )
+          : [{ step: "No instructions available." }];
+        extendedIngredients = rawRecipe.extendedIngredients;
+      }
+
+      // Set the recipe data in the component state
+      this.recipe = { ...rawRecipe, _instructions, extendedIngredients };
+
+      // Save in sessionStorage for future use
+      sessionStorage.setItem('currentRecipe', JSON.stringify(this.recipe));
+    },
   },
 };
 </script>
@@ -149,3 +149,4 @@ export default {
   margin-top: 20px; /* Space above the container */
 }
 </style>
+

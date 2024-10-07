@@ -89,34 +89,42 @@ export default {
   },
   methods: {
     async updateRecipesBackEnd() {
-      try {
-        // Fetch recipes based on the current page
-        if (this.parentPageName === "main") {
-          const numberOfRecipesToDisplay = 3;
-          const response = await this.axios.get(
-            `${this.$root.store.server_domain}/recipes/random`,
-            {
-              params: { number: numberOfRecipesToDisplay },
-            },
-            { withCredentials: true }
-          );
-          this.recipes = response.data; // Set recipes to the fetched data
-        } else if (this.parentPageName === "favorites") {
-          const response = await this.axios.get(
-            `${this.$root.store.server_domain}/user/favorites/show`,
-            { withCredentials: true }
-          );
-          this.recipes = response.data; // Set recipes to the fetched favorite recipes
-        } else {
-          // Use mock data or other logic for non-main pages
-          const response = mockGetRecipesPreview(10);
-          this.recipes = response.data.recipes;
-        }
-        this.updateDisplayedRecipes(); // Set initial displayed recipes
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
-      }
-    },
+  try {
+    // Fetch recipes based on the current page
+    if (this.parentPageName === "main") {
+      const numberOfRecipesToDisplay = 3;
+      const response = await this.axios.get(
+        `${this.$root.store.server_domain}/recipes/random`,
+        {
+          params: { number: numberOfRecipesToDisplay },
+        },
+        { withCredentials: true }
+      );
+      this.recipes = response.data; // Set recipes to the fetched data
+    } else if (this.parentPageName === "favorites") {
+      const response = await this.axios.get(
+        `${this.$root.store.server_domain}/user/favorites/show`,
+        { withCredentials: true }
+      );
+      this.recipes = response.data; // Set recipes to the fetched favorite recipes
+      
+    } else if (this.parentPageName === "private") { // Updated condition to match parentPageName
+      const response = await this.axios.get(
+        `${this.$root.store.server_domain}/user/PrivateRecipes`, // Use correct endpoint
+        { withCredentials: true }
+      );
+      this.recipes = response.data; // Set recipes to the fetched private recipes
+
+    } else {
+      // Use mock data or other logic for non-main pages
+      const response = mockGetRecipesPreview(10);
+      this.recipes = response.data.recipes;
+    }
+    this.updateDisplayedRecipes(); // Set initial displayed recipes
+  } catch (error) {
+    console.error("Error fetching recipes:", error);
+  }
+},
     updateDisplayedRecipes() {
       // Calculate the start and end indices for the recipes to display
       const startIndex = this.currentPage * this.pageSize;
@@ -148,8 +156,10 @@ export default {
         this.parentPageName = "main";
       } else if (routeName === "favorites") {
         this.parentPageName = "favorites";
-      } else if (routeName === "private") {
+      } else if (routeName === "private") { // Ensure this matches the route name for the private page
         this.parentPageName = "private";
+      } else if (routeName === "search") {
+        this.parentPageName = "search";
       }
     },
     handleFavoriteToggle(recipeId) {
