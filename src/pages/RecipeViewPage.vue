@@ -80,7 +80,7 @@ export default {
     // Fetch private recipe details
     async fetchPrivateRecipe(recipeId) {
       try {
-        const response = await this.axios.get(`${this.$root.store.server_domain}/user/PrivateRecipes/${recipeId}/view`, { withCredentials: true });
+        const response = await this.axios.get(`${this.$root.store.server_domain}/user/PrivateRecipes/`, { withCredentials: true });
         this.processRecipe(response.data);
       } catch (error) {
         console.error('Error fetching private recipe:', error);

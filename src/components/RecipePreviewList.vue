@@ -88,43 +88,96 @@ export default {
     this.updateRecipesBackEnd(); // Fetch recipes when the component is mounted
   },
   methods: {
-    async updateRecipesBackEnd() {
-  try {
-    // Fetch recipes based on the current page
-    if (this.parentPageName === "main") {
-      const numberOfRecipesToDisplay = 3;
-      const response = await this.axios.get(
-        `${this.$root.store.server_domain}/recipes/random`,
-        {
-          params: { number: numberOfRecipesToDisplay },
-        },
-        { withCredentials: true }
-      );
-      this.recipes = response.data; // Set recipes to the fetched data
-    } else if (this.parentPageName === "favorites") {
-      const response = await this.axios.get(
-        `${this.$root.store.server_domain}/user/favorites/show`,
-        { withCredentials: true }
-      );
-      this.recipes = response.data; // Set recipes to the fetched favorite recipes
-      
-    } else if (this.parentPageName === "private") { // Updated condition to match parentPageName
-      const response = await this.axios.get(
-        `${this.$root.store.server_domain}/user/PrivateRecipes`, // Use correct endpoint
-        { withCredentials: true }
-      );
-      this.recipes = response.data; // Set recipes to the fetched private recipes
+    /**
+     * Transforms a string of ingredients into an array of ingredient objects.
+     */
+    transformIngredients(ingredientsString) {
+      return ingredientsString.split(",").map((ingredient) => ({
+        original: ingredient.trim(),
+        name: ingredient.trim(),
+        amount: 1, // Default amount; adjust if known
+        unit: "", // Default unit; adjust if known
+      }));
+    },
 
-    } else {
-      // Use mock data or other logic for non-main pages
-      const response = mockGetRecipesPreview(10);
-      this.recipes = response.data.recipes;
-    }
-    this.updateDisplayedRecipes(); // Set initial displayed recipes
-  } catch (error) {
-    console.error("Error fetching recipes:", error);
-  }
-},
+    /**
+     * Transforms summary into analyzedInstructions format.
+     */
+    transformInstructions(summary) {
+      return [
+        {
+          name: "", // Default name for instruction step
+          steps: [
+            {
+              number: 1,
+              step: summary, // Use summary as the single step of the recipe
+            },
+          ],
+        },
+      ];
+    },
+
+    /**
+     * Transforms private recipes to match the format of public recipes.
+     */
+    transformPrivateRecipes(privateRecipes) {
+      return privateRecipes.map((recipe) => {
+        return {
+          id: recipe.id,
+          title: recipe.title,
+          readyInMinutes: recipe.readyInMinutes,
+          image: recipe.image,
+          // Map diet preferences
+          vegetarian: recipe.diet.vegetarian,
+          vegan: recipe.diet.vegan,
+          glutenFree: recipe.diet.glutenFree,
+          // Transform ingredients into the expected format
+          extendedIngredients: this.transformIngredients(recipe.ingredients),
+          // Transform summary to analyzedInstructions
+          analyzedInstructions: this.transformInstructions(recipe.summary),
+          // Additional fields with default or derived values
+          aggregateLikes: 0, // Default value
+          servings: 1, // Default serving size
+        };
+      });
+    },
+
+    async updateRecipesBackEnd() {
+      try {
+        // Fetch recipes based on the current page
+        if (this.parentPageName === "main") {
+          const numberOfRecipesToDisplay = 3;
+          const response = await this.axios.get(
+            `${this.$root.store.server_domain}/recipes/random`,
+            {
+              params: { number: numberOfRecipesToDisplay },
+            },
+            { withCredentials: true }
+          );
+          this.recipes = response.data; // Set recipes to the fetched data
+        } else if (this.parentPageName === "favorites") {
+          const response = await this.axios.get(
+            `${this.$root.store.server_domain}/user/favorites/show`,
+            { withCredentials: true }
+          );
+          this.recipes = response.data; // Set recipes to the fetched favorite recipes
+        } else if (this.parentPageName === "private") { 
+          const response = await this.axios.get(
+            `${this.$root.store.server_domain}/user/PrivateRecipes`,
+            { withCredentials: true }
+          );
+          this.recipes = this.transformPrivateRecipes(response.data);  // Transform private recipes
+        } else {
+          // Use mock data or other logic for non-main pages
+          const response = mockGetRecipesPreview(10);
+          this.recipes = response.data.recipes;
+        }
+        this.updateDisplayedRecipes(); // Set initial displayed recipes
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+      }
+    },
+
     updateDisplayedRecipes() {
       // Calculate the start and end indices for the recipes to display
       const startIndex = this.currentPage * this.pageSize;
@@ -213,6 +266,7 @@ export default {
   },
 };
 </script>
+
 
 <style lang="scss" scoped>
 .rotate-on-hover {
