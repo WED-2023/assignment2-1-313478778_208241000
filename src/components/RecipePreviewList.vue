@@ -115,19 +115,25 @@ export default {
     /**
      * Transforms summary into analyzedInstructions format.
      */
-    transformInstructions(summary) {
+     transformInstructions(summary) {
+  // Split the summary by commas and trim whitespace
+      const stepsArray = summary.split(',').map(item => item.trim());
+
+      // Map each item to a step object with a number
+      const steps = stepsArray.map((stepText, index) => ({
+        number: index + 1,
+        step: stepText,
+      }));
+
+      // Return the structured instructions
       return [
         {
           name: "", // Default name for instruction step
-          steps: [
-            {
-              number: 1,
-              step: summary, // Use summary as the single step of the recipe
-            },
-          ],
+          steps: steps,
         },
       ];
     },
+
 
     /**
      * Transforms private recipes to match the format of public recipes.
