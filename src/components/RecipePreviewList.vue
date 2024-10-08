@@ -16,7 +16,7 @@
             <b-icon stacked icon="arrow-repeat" scale="0.8" variant="white"></b-icon>
           </b-iconstack>
         </div>
-        <div v-else-if="parentPageName === 'favorites' || parentPageName === 'private'">
+        <div v-else-if="parentPageName === 'favorites' || parentPageName === 'private' || parentPageName === 'search'">
           <!-- Favorites or Private page: Left and right arrows for navigation -->
           <b-icon
             icon="arrow-left-circle-fill"
@@ -51,19 +51,27 @@ import RecipePreview from "./RecipePreview.vue";
 import { mockGetRecipesPreview } from "../services/recipes.js";
 
 export default {
-  name: "RecipePreviewList", // Component name
+  name: 'RecipePreviewList',
   components: {
-    RecipePreview, // Registering the RecipePreview component
+    RecipePreview,
   },
   props: {
     title: {
       type: String,
-      required: true, // Title prop is required
+      required: true,
+    },
+    recipes: {
+      type: Array,
+      default: () => [],
+    },
+    numberOfRecipes: {
+      type: Number,
+      default: 3,
     },
   },
   data() {
     return {
-      recipes: [], // Array to hold fetched recipes
+      // recipes: [], // Array to hold fetched recipes
       displayedRecipes: [], // Recipes to be displayed in the current view
       currentPage: 0, // Current page index
       pageSize: 3, // Number of recipes per page
@@ -84,9 +92,13 @@ export default {
     
   },
   mounted() {
-    this.determineParentPageName(); // Set pageType based on the current route
-    this.updateRecipesBackEnd(); // Fetch recipes when the component is mounted
-  },
+  this.determineParentPageName();
+  if (this.parentPageName !== 'search') {
+    this.updateRecipesBackEnd();
+  } else {
+    this.updateDisplayedRecipes();
+  }
+},
   methods: {
     /**
      * Transforms a string of ingredients into an array of ingredient objects.
@@ -161,19 +173,22 @@ export default {
             { withCredentials: true }
           );
           this.recipes = response.data; // Set recipes to the fetched favorite recipes
+
         } else if (this.parentPageName === "private") { 
           const response = await this.axios.get(
             `${this.$root.store.server_domain}/user/PrivateRecipes`,
             { withCredentials: true }
           );
-          this.recipes = this.transformPrivateRecipes(response.data);  // Transform searched recipes
-        // }else if (this.parentPageName === "search") { 
-        //   const response = await this.axios.get(
-        //     `${this.$root.store.server_domain}/recipes/search`,
-        //     { withCredentials: true }
-        //   );
-          // this.recipes = this.transformPrivateRecipes(response.data);  // Transform private recipes
+          this.recipes = this.transformPrivateRecipes(response.data);  // Transform private recipes
+          
+        }else if (this.parentPageName === "search") { 
+          const response = await this.axios.get(
+            // `${this.$root.store.server_domain}/recipes/search`,
+            // { withCredentials: true }
+          );
+          // this.recipes = response.data;  // Transform searched recipes
         }
+        
         else {
           // Use mock data or other logic for non-main pages
           const response = mockGetRecipesPreview(10);
@@ -186,11 +201,11 @@ export default {
     },
 
     updateDisplayedRecipes() {
-      // Calculate the start and end indices for the recipes to display
-      const startIndex = this.currentPage * this.pageSize;
-      const endIndex = startIndex + this.pageSize;
-      this.displayedRecipes = this.recipes.slice(startIndex, endIndex);
-    },
+  const startIndex = this.currentPage * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  this.displayedRecipes = this.recipes.slice(startIndex, endIndex);
+}
+,
     nextPage() {
       // Navigate to the next page if there's a next page
       if (this.hasNextPage) {

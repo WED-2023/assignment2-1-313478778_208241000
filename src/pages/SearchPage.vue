@@ -97,41 +97,33 @@ export default {
   },
   methods: {
     async performSearch() {
-      if (this.text.trim() === '') {
-        this.searchQueryEmpty = true;
-        return;
+  if (this.text.trim() === '') {
+    this.searchQueryEmpty = true;
+    return;
+  }
+  this.searchQueryEmpty = false;
+
+  try {
+    // Make a single request to search for recipes
+    const response = await axios.get(`${this.$root.store.server_domain}/recipes/search`, {
+      params: {
+        recipeName: this.text,
+        cuisine: this.selects[0].selected ? this.selects[0].selected : null,
+        diet: this.selects[1].selected ? this.selects[1].selected : null,
+        intolerance: this.selects[2].selected ? this.selects[2].selected : null,
+        number: this.selectedResult
       }
-      this.searchQueryEmpty = false;
+    });
 
-      try {
-        const response = await axios.get(`${this.$root.store.server_domain}/recipes/search`, {
-          params: {
-            recipeName: this.text,
-            cuisine: this.selects[0].selected ? this.selects[0].selected : null,
-            diet: this.selects[1].selected ? this.selects[1].selected : null,
-            intolerance: this.selects[2].selected ? this.selects[2].selected : null,
-            number: this.selectedResult
-          }
-        });
-
-        const results = response.data;
-        const allRecipes = [];
-
-        // Fetch details for each recipe
-        for (const result of results) {
-          const currentId = result.id;
-          const currentRecipeInfo = await axios.get(`${this.$root.store.server_domain}/recipes/${currentId}/information`);
-          allRecipes.push(currentRecipeInfo.data);
-        }
-
-        this.recipes = allRecipes;
-        this.searchPerformed = true;
-        this.noResultsFound = allRecipes.length === 0;
-      } catch (error) {
-        console.error("Search failed:", error);
-        this.noResultsFound = true;
-      }
-    },
+    // Directly use the search result data
+    this.recipes = response.data;
+    this.searchPerformed = true;
+    this.noResultsFound = this.recipes.length === 0;
+  } catch (error) {
+    console.error("Search failed:", error);
+    this.noResultsFound = true;
+  }
+},
     selectResult(result) {
       this.selectedResult = result;
     },
