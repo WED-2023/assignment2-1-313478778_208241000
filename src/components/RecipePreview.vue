@@ -136,23 +136,23 @@ export default {
     },
 
     async toggleFavorite(isAdding) {
-      const recipeId = this.recipe.id;
+      const recipe_id = this.recipe.id;
 
       try {
         let response;
         if (isAdding) {
           // Add recipe to favorites
-          response = await axios.post(`${this.$root.store.server_domain}/user/favorites/add`, { recipeId }, { withCredentials: true });
+          response = await axios.post(`${this.$root.store.server_domain}/user/favorites/add`, { recipe_id }, { withCredentials: true });
           console.log('Recipe added to favorites:', response.data);
         } else {
           // Remove recipe from favorites
           response = await axios.delete(`${this.$root.store.server_domain}/user/favorites/remove`, {
-            data: { recipeId },
+            data: { recipe_id },
             withCredentials: true,
           });
           console.log('Recipe removed from favorites:', response.data);
         }
-        this.$emit('favorite-toggled', recipeId); // Emit the result to the parent
+        this.$emit('favorite-toggled', recipe_id); // Emit the result to the parent
 
         // Handle success message if needed
         // this.form.submitError = null;
@@ -161,9 +161,10 @@ export default {
         const errorMessage = err.response?.data?.message || 'An error occurred. Please try again.';
         console.error('Favorite action failed:', err);
       }
-    },
+    }, 
 
     onFavoriteToggle(isFavortie) {
+      // console.log('Favorite toggle action:', isFavortie);
       this.recipe.isFavortie = isFavortie
       this.toggleFavorite(isFavortie); // Perform the favorite toggle action
     },
@@ -171,7 +172,7 @@ export default {
     goToRecipe() {
       // Store the recipe object in sessionStorage as a JSON string
       sessionStorage.setItem('currentRecipe', JSON.stringify(this.recipe));
-      this.$router.push({ name: 'recipe', params: { recipeId: this.recipe.id } });
+      this.$router.push({ name: 'recipe', params: { recipe_id: this.recipe.id } });
   }
   },
   mounted() {

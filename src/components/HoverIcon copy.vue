@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <!-- Dynamic component to render the icon based on currentIconComponent -->
   <component
     :is="currentIconComponent"
@@ -112,4 +112,4 @@ export default {
 .hover-icon:hover {
   transform: scale(1.5); /* Enlarges the icon on hover */
 }
-</style>
+</style> -->

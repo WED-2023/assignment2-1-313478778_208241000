@@ -166,8 +166,15 @@ export default {
             `${this.$root.store.server_domain}/user/PrivateRecipes`,
             { withCredentials: true }
           );
-          this.recipes = this.transformPrivateRecipes(response.data);  // Transform private recipes
-        } else {
+          this.recipes = this.transformPrivateRecipes(response.data);  // Transform searched recipes
+        // }else if (this.parentPageName === "search") { 
+        //   const response = await this.axios.get(
+        //     `${this.$root.store.server_domain}/recipes/search`,
+        //     { withCredentials: true }
+        //   );
+          // this.recipes = this.transformPrivateRecipes(response.data);  // Transform private recipes
+        }
+        else {
           // Use mock data or other logic for non-main pages
           const response = mockGetRecipesPreview(10);
           this.recipes = response.data.recipes;
